@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -15,17 +16,17 @@ class AuthGate extends StatelessWidget {
       }
 
       if (state is AuthenticatedState) {
-        return const HomePage();
+        return _homePage();
       }
 
       if (state is UnauthenticatedState) {
-        return const LoginPage();
+        return LoginPage();
       }
       if (state is AuthError) {
         return _errorScreen(state.message);
       }
 
-      return const LoginPage();
+      return LoginPage();
     },
   );
 
@@ -42,4 +43,9 @@ class AuthGate extends StatelessWidget {
   );
 
   _loader() => Scaffold(body: Center(child: CircularProgressIndicator()));
+
+  _homePage() => Scaffold(
+    backgroundColor: Colors.greenAccent,
+    body: Center(child: Text('HomePage')),
+  );
 }

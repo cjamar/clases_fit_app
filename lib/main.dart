@@ -7,6 +7,7 @@ import 'package:clases_fit_app/features/auth/domain/usecases/sign_in.dart';
 import 'package:clases_fit_app/features/auth/domain/usecases/sign_out.dart';
 import 'package:clases_fit_app/features/auth/domain/usecases/sign_up.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -43,10 +44,14 @@ class MyApp extends StatelessWidget {
             googleSignIn: googleSignIn,
             signOut: signOut,
             getCurrentSession: getCurrentSession,
-          ),
+          )..add(AppStarted()),
         ),
       ],
-      child: MaterialApp(home: const AuthGate()),
+      child: MaterialApp(
+        // theme: PENDIENTE DE DEFINIR Y COLOCAR EL THEME,
+        debugShowCheckedModeBanner: false,
+        home: const AuthGate(),
+      ),
     );
   }
 }
