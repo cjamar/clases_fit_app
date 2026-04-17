@@ -1,5 +1,6 @@
 import '../../domain/usecases/get_current_session.dart';
 import '../../domain/usecases/google_sign_in.dart';
+import '../../domain/usecases/reset_password.dart';
 import '../../domain/usecases/sign_in.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/usecases/sign_out.dart';
@@ -13,6 +14,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GoogleSignIn googleSignIn;
   final SignOut signOut;
   final GetCurrentSession getCurrentSession;
+  final ResetPassword resetPassword;
 
   AuthBloc({
     required this.signIn,
@@ -20,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.googleSignIn,
     required this.signOut,
     required this.getCurrentSession,
+    required this.resetPassword,
   }) : super(AuthInitialState()) {
     on<AppStarted>((event, emit) async {
       emit(AuthLoading());
@@ -43,7 +46,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         emit(AuthenticatedState(session.user));
       } catch (e) {
-        emit(AuthError(e.toString()));
         emit(UnauthenticatedState());
       }
     });
@@ -72,6 +74,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         emit(AuthError(e.toString()));
         emit(UnauthenticatedState());
+      }
+    });
+
+    on<ResetPasswordRequested>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        await resetPassword(email: event.email);
+        emit(PasswordResetEmailSentState());
+      } catch (e) {
+        emit(AuthError(e.toString()));
       }
     });
 

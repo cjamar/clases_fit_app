@@ -21,6 +21,8 @@ class AuthenticatedState extends AuthState {
 
 class UnauthenticatedState extends AuthState {}
 
+class PasswordResetEmailSentState extends AuthState {}
+
 class AuthError extends AuthState {
   final String message;
   const AuthError(this.message);

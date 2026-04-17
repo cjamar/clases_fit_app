@@ -1,5 +1,6 @@
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
+import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_button.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
@@ -73,6 +74,8 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  void _backToLogin() => Navigator.pop(context);
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -102,46 +105,46 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _formArea(Size size) => Container(
     height: size.height * 0.6,
+    width: size.width,
     color: Colors.white,
     child: Form(
       key: _formKey,
-      child: AuthForm(
-        fields: [
-          AuthEmailField(
-            controller: _emailController,
-            focusNode: _emailFocus,
-            size: size,
+      child: Column(
+        children: [
+          AuthForm(
+            fields: [
+              AuthEmailField(
+                controller: _emailController,
+                focusNode: _emailFocus,
+                size: size,
+              ),
+              SizedBox(height: size.height * 0.04),
+              AuthPasswordField(
+                controller: _passwordController,
+                focusNode: _passwordFocus,
+                size: size,
+              ),
+              SizedBox(height: size.height * 0.045),
+              AuthPasswordField(
+                controller: _confirmPasswordController,
+                focusNode: _confirmPasswordFocus,
+                label: 'Confirmar contraseña',
+                size: size,
+              ),
+              SizedBox(height: size.height * 0.055),
+            ],
+            submitButton: ValueListenableBuilder<bool>(
+              valueListenable: _isValid,
+              builder: (context, isValid, child) => AuthSubmitButton(
+                text: 'Registrarme',
+                onPressed: isValid ? _onSubmit : null,
+                size: size,
+              ),
+            ),
           ),
-          SizedBox(height: size.height * 0.04),
-          AuthPasswordField(
-            controller: _passwordController,
-            focusNode: _passwordFocus,
-            size: size,
-          ),
-          SizedBox(height: size.height * 0.04),
-          AuthPasswordField(
-            controller: _confirmPasswordController,
-            focusNode: _confirmPasswordFocus,
-            label: 'Confirmar contraseña',
-            size: size,
-          ),
-          SizedBox(height: size.height * 0.04),
-          AuthFooter(
-            rememberMe: false,
-            onRememberChanged: null,
-            onRegisterTap: null,
-            onForgotPasswordTap: () {}, // navegación a reset
-            size: size,
-          ),
+          SizedBox(height: size.height * 0.02),
+          AuthBackButton(size: size, name: 'Volver a Login'),
         ],
-        submitButton: ValueListenableBuilder<bool>(
-          valueListenable: _isValid,
-          builder: (context, isValid, child) => AuthSubmitButton(
-            text: 'Registrarme',
-            onPressed: isValid ? _onSubmit : null,
-            size: size,
-          ),
-        ),
       ),
     ),
   );

@@ -4,5 +4,5 @@ class ResetPassword {
   final AuthRepository repository;
   ResetPassword(this.repository);
 
-  Future<void> call(String email) => repository.resetPassword(email);
+  Future<void> call({required String email}) => repository.resetPassword(email);
 }

@@ -1,6 +1,8 @@
+import 'package:clases_fit_app/features/auth/domain/usecases/reset_password.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:clases_fit_app/features/auth/presentation/pages/register_page.dart';
+import 'package:clases_fit_app/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
@@ -70,9 +72,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onRegister() => Navigator.push(
+  void _goToRegister() => Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => const RegisterPage()),
+  );
+
+  void _goToResetPassword() => Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const ResetPasswordPage()),
   );
 
   _googleSignIn() => context.read<AuthBloc>().add(GoogleLoginRequested());
@@ -124,8 +131,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
           SizedBox(height: size.height * 0.04),
           AuthFooter(
-            onRegisterTap: _onRegister,
-            onForgotPasswordTap: () {},
+            onRegisterTap: _goToRegister,
+            onForgotPasswordTap: _goToResetPassword,
             rememberMe: _rememberMe,
             onRememberChanged: (value) => setState(() {
               _rememberMe = value;
