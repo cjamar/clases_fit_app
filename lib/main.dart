@@ -1,16 +1,16 @@
 import 'package:clases_fit_app/core/app/auth_gate.dart';
-import 'package:clases_fit_app/features/auth/data/datasources/auth_remote_datasource_impl.dart';
-import 'package:clases_fit_app/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:clases_fit_app/features/auth/domain/usecases/get_current_session.dart';
-import 'package:clases_fit_app/features/auth/domain/usecases/google_sign_in.dart';
-import 'package:clases_fit_app/features/auth/domain/usecases/sign_in.dart';
-import 'package:clases_fit_app/features/auth/domain/usecases/sign_out.dart';
-import 'package:clases_fit_app/features/auth/domain/usecases/sign_up.dart';
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'features/auth/data/datasources/auth_remote_datasource_impl.dart';
+import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/domain/usecases/get_current_session.dart';
+import 'features/auth/domain/usecases/google_sign_in.dart';
+import 'features/auth/domain/usecases/sign_in.dart';
+import 'features/auth/domain/usecases/sign_out.dart';
+import 'features/auth/domain/usecases/sign_up.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/auth/presentation/bloc/auth_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

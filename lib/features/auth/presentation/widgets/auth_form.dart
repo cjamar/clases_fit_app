@@ -12,7 +12,7 @@ class AuthForm extends StatelessWidget {
     return Column(
       children: [
         ...fields,
-        SizedBox(height: size.height * 0.05),
+        SizedBox(height: size.height * 0.025),
         submitButton,
       ],
     );

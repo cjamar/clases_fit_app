@@ -1,6 +1,5 @@
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/register_page.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
@@ -9,73 +8,70 @@ import 'package:clases_fit_app/features/auth/presentation/widgets/auth_submit_bu
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/auth_google_button.dart';
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _emailFocus = FocusNode();
   final _passwordFocus = FocusNode();
+  final _confirmPasswordFocus = FocusNode();
   final ValueNotifier<bool> _isValid = ValueNotifier(false);
-  bool _rememberMe = false;
 
   @override
   void initState() {
     super.initState();
     _emailController.addListener(_validate);
     _passwordController.addListener(_validate);
+    _confirmPasswordController.addListener(_validate);
     _emailFocus.addListener(() => setState(() {}));
     _passwordFocus.addListener(() => setState(() {}));
+    _confirmPasswordFocus.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     _emailFocus.dispose();
     _passwordFocus.dispose();
-    _isValid.dispose();
+    _confirmPasswordFocus.dispose();
     super.dispose();
   }
 
   void _validate() {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
 
-    final isValid =
-        email.isNotEmpty &&
-        RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email) &&
-        password.isNotEmpty;
+    final emailValid =
+        email.isNotEmpty && RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email);
 
-    _isValid.value = isValid;
+    final passwordValid = password.isNotEmpty && password.length >= 6;
+    final confirmPasswordValid = confirmPassword == password;
+
+    _isValid.value = emailValid && passwordValid && confirmPasswordValid;
   }
 
   void _onSubmit() {
     if (!_formKey.currentState!.validate()) return;
 
     context.read<AuthBloc>().add(
-      LoginRequested(
+      RegisterRequested(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
-        rememberMe: _rememberMe,
+        name: 'user-name',
       ),
     );
   }
-
-  void _onRegister() => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const RegisterPage()),
-  );
-
-  _googleSignIn() => context.read<AuthBloc>().add(GoogleLoginRequested());
 
   @override
   Widget build(BuildContext context) {
@@ -86,26 +82,26 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.yellow,
-        body: _loginBody(context, size),
+        backgroundColor: Colors.orangeAccent,
+        body: _registerBody(size),
       ),
     );
   }
 
-  _loginBody(BuildContext context, size) => SizedBox(
+  _registerBody(Size size) => SizedBox(
+    width: size.width,
     height: size.height,
-    width: size.width,
-    child: Column(children: [_logoArea(size), _formArea(context, size)]),
+    child: Column(children: [_imageRegisterArea(size), _formArea(size)]),
   );
 
-  _logoArea(Size size) => SizedBox(
-    height: size.height * 0.35,
-    child: Center(child: Icon(Icons.logo_dev, size: size.width * 0.15)),
+  _imageRegisterArea(Size size) => SizedBox(
+    width: size.width * 0.8,
+    height: size.height * 0.4,
+    child: Center(child: Icon(Icons.key, size: size.width * 0.15)),
   );
 
-  _formArea(BuildContext context, Size size) => Container(
-    height: size.height * 0.65,
-    width: size.width,
+  _formArea(Size size) => Container(
+    height: size.height * 0.6,
     color: Colors.white,
     child: Form(
       key: _formKey,
@@ -123,22 +119,25 @@ class _LoginPageState extends State<LoginPage> {
             size: size,
           ),
           SizedBox(height: size.height * 0.04),
-          AuthFooter(
-            onRegisterTap: _onRegister,
-            onForgotPasswordTap: () {},
-            rememberMe: _rememberMe,
-            onRememberChanged: (value) => setState(() {
-              _rememberMe = value;
-            }),
+          AuthPasswordField(
+            controller: _confirmPasswordController,
+            focusNode: _confirmPasswordFocus,
+            label: 'Confirmar contraseña',
             size: size,
           ),
           SizedBox(height: size.height * 0.04),
-          AuthGoogleButton(onPressed: _googleSignIn, size: size),
+          AuthFooter(
+            rememberMe: false,
+            onRememberChanged: null,
+            onRegisterTap: null,
+            onForgotPasswordTap: () {}, // navegación a reset
+            size: size,
+          ),
         ],
         submitButton: ValueListenableBuilder<bool>(
           valueListenable: _isValid,
           builder: (context, isValid, child) => AuthSubmitButton(
-            text: 'Iniciar Sesión',
+            text: 'Registrarme',
             onPressed: isValid ? _onSubmit : null,
             size: size,
           ),

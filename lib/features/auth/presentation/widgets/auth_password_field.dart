@@ -9,7 +9,7 @@ class AuthPasswordField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.focusNode,
-    this.label = 'Password',
+    this.label = 'Contraseña',
     required this.size,
   });
 
@@ -32,7 +32,7 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
           obscureText: _obscureText,
           validator: (value) => _validatePassword(value),
           decoration: InputDecoration(
-            hintText: 'Password',
+            hintText: widget.label,
             filled: true,
             fillColor: Colors.grey.shade200,
             border: _inputBorder(widget.size, Colors.transparent),
@@ -80,6 +80,6 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
 
   _inputBorder(Size size, Color color) => OutlineInputBorder(
     borderRadius: BorderRadius.circular(size.width * 0.02),
-    borderSide: BorderSide(color: color, width: 0.6),
+    borderSide: BorderSide(color: color, width: 1),
   );
 }
