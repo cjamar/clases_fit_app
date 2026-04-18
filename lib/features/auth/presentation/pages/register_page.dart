@@ -5,6 +5,7 @@ import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_butt
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
+import 'package:clases_fit_app/features/auth/presentation/widgets/auth_name_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_password_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,11 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _nameFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _passwordFocus = FocusNode();
   final _confirmPasswordFocus = FocusNode();
@@ -30,9 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
+    _nameController.addListener(_validate);
     _emailController.addListener(_validate);
     _passwordController.addListener(_validate);
     _confirmPasswordController.addListener(_validate);
+    _nameController.addListener(() => setState(() {}));
     _emailFocus.addListener(() => setState(() {}));
     _passwordFocus.addListener(() => setState(() {}));
     _confirmPasswordFocus.addListener(() => setState(() {}));
@@ -40,9 +45,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _nameFocus.dispose();
     _emailFocus.dispose();
     _passwordFocus.dispose();
     _confirmPasswordFocus.dispose();
@@ -50,17 +57,20 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _validate() {
+    final userName = _nameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
     final confirmPassword = _confirmPasswordController.text.trim();
 
+    final userNameValid = userName.isNotEmpty && userName.length >= 3;
     final emailValid =
         email.isNotEmpty && RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email);
 
     final passwordValid = password.isNotEmpty && password.length >= 6;
     final confirmPasswordValid = confirmPassword == password;
 
-    _isValid.value = emailValid && passwordValid && confirmPasswordValid;
+    _isValid.value =
+        userNameValid && emailValid && passwordValid && confirmPasswordValid;
   }
 
   void _onSubmit() {
@@ -70,13 +80,18 @@ class _RegisterPageState extends State<RegisterPage> {
       RegisterRequested(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
-        name: 'user-name',
+        name: _capitalizer(_nameController.text.trim()),
       ),
     );
+    _nameController.clear();
     _emailController.clear();
     _passwordController.clear();
     _confirmPasswordController.clear();
   }
+
+  String _capitalizer(String text) => text.isNotEmpty
+      ? text[0].toUpperCase() + text.substring(1).toLowerCase()
+      : text;
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +127,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _imageRegisterArea(Size size) => SizedBox(
     width: size.width * 0.8,
-    height: size.height * 0.4,
+    height: size.height * 0.35,
     child: Center(child: Icon(Icons.key, size: size.width * 0.15)),
   );
 
   _formArea(Size size) => Container(
-    height: size.height * 0.6,
+    height: size.height * 0.65,
     width: size.width,
     color: Colors.white,
     child: Form(
@@ -126,25 +141,31 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           AuthForm(
             fields: [
+              AuthNameField(
+                controller: _nameController,
+                focusNode: _nameFocus,
+                size: size,
+              ),
+              SizedBox(height: size.height * 0.025),
               AuthEmailField(
                 controller: _emailController,
                 focusNode: _emailFocus,
                 size: size,
               ),
-              SizedBox(height: size.height * 0.04),
+              SizedBox(height: size.height * 0.025),
               AuthPasswordField(
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 size: size,
               ),
-              SizedBox(height: size.height * 0.045),
+              SizedBox(height: size.height * 0.025),
               AuthPasswordField(
                 controller: _confirmPasswordController,
                 focusNode: _confirmPasswordFocus,
                 label: 'Confirmar contraseña',
                 size: size,
               ),
-              SizedBox(height: size.height * 0.055),
+              SizedBox(height: size.height * 0.045),
             ],
             submitButton: ValueListenableBuilder<bool>(
               valueListenable: _isValid,
