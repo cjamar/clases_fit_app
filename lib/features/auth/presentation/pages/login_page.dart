@@ -1,17 +1,16 @@
-import 'package:clases_fit_app/features/auth/domain/usecases/reset_password.dart';
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/register_page.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/reset_password_page.dart';
-import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
-import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
-import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
-import 'package:clases_fit_app/features/auth/presentation/widgets/auth_password_field.dart';
-import 'package:clases_fit_app/features/auth/presentation/widgets/auth_submit_button.dart';
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../widgets/auth_email_field.dart';
+import '../widgets/auth_footer.dart';
+import '../widgets/auth_form.dart';
 import '../widgets/auth_google_button.dart';
+import '../widgets/auth_password_field.dart';
+import '../widgets/auth_submit_button.dart';
+import 'register_page.dart';
+import 'reset_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -70,6 +69,8 @@ class _LoginPageState extends State<LoginPage> {
         rememberMe: _rememberMe,
       ),
     );
+    _emailController.clear();
+    _passwordController.clear();
   }
 
   void _goToRegister() => Navigator.push(
@@ -94,7 +95,14 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.yellow,
-        body: _loginBody(context, size),
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is AuthError) {
+              _showSnackbar('Error, ${state.message}', Colors.red);
+            }
+          },
+          child: _loginBody(context, size),
+        ),
       ),
     );
   }
@@ -153,4 +161,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
     ),
   );
+
+  _showSnackbar(String message, Color color) => ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(message), backgroundColor: color));
 }

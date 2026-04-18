@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,41 +12,27 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<AuthBloc, AuthState>(
     builder: (context, state) {
-      if (state is AuthLoading || state is AuthInitialState) {
-        return _loader();
-      }
-
       if (state is AuthenticatedState) {
-        return _homePage();
+        return _homePage(context);
       }
-
       if (state is UnauthenticatedState) {
         return LoginPage();
       }
-      if (state is AuthError) {
-        return _errorScreen(state.message);
-      }
-
       return LoginPage();
     },
   );
 
-  _errorScreen(String message) => Scaffold(
+  _homePage(BuildContext context) => Scaffold(
+    backgroundColor: Colors.greenAccent,
     body: Center(
-      child: Column(
-        children: [
-          Icon(Icons.error),
-          SizedBox(height: 12),
-          Text('AuthError, $message'),
-        ],
+      child: TextButton(
+        onPressed: () => _logOut(context),
+        style: TextButton.styleFrom(backgroundColor: Colors.white),
+        child: Text('Pulsar para Logout ->'),
       ),
     ),
   );
 
-  _loader() => Scaffold(body: Center(child: CircularProgressIndicator()));
-
-  _homePage() => Scaffold(
-    backgroundColor: Colors.greenAccent,
-    body: Center(child: Text('HomePage')),
-  );
+  void _logOut(BuildContext context) =>
+      context.read<AuthBloc>().add(LogoutRequested());
 }

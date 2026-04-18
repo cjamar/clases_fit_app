@@ -37,7 +37,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<LoginRequested>((event, emit) async {
       emit(AuthLoading());
-
       try {
         final session = await signIn(
           email: event.email,
@@ -46,22 +45,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         );
         emit(AuthenticatedState(session.user));
       } catch (e) {
-        emit(UnauthenticatedState());
+        emit(AuthError(e.toString()));
       }
     });
 
     on<RegisterRequested>((event, emit) async {
       emit(AuthLoading());
       try {
-        final session = await signUp(
+        await signUp(
           email: event.email,
           password: event.password,
           name: event.name,
         );
-        emit(AuthenticatedState(session.user));
+        emit(RegisterSuccess());
+        emit(UnauthenticatedState());
       } catch (e) {
         emit(AuthError(e.toString()));
-        emit(UnauthenticatedState());
       }
     });
 
@@ -73,7 +72,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthenticatedState(session.user));
       } catch (e) {
         emit(AuthError(e.toString()));
-        emit(UnauthenticatedState());
       }
     });
 

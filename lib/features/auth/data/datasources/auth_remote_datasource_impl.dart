@@ -14,6 +14,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       password: password,
       data: {'name': name},
     );
+
     final user = response.user!;
     return AuthSession(
       user: UserModel.fromSupabaseUser(user),

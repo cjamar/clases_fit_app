@@ -15,7 +15,11 @@ import 'features/auth/presentation/bloc/auth_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(url: 'MY_URL', anonKey: 'MY_KEY');
+  await Supabase.initialize(
+    url: 'https://nnkzposckczjchppcbrm.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ua3pwb3Nja2N6amNocHBjYnJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY0NDIzMDksImV4cCI6MjA5MjAxODMwOX0.2znOWktXwRw3r4M7bWQcUl62jK9vX7L0nWHwzqBl4co',
+  );
   runApp(MyApp());
 }
 

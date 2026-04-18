@@ -19,6 +19,8 @@ class AuthenticatedState extends AuthState {
   List<Object?> get props => [user];
 }
 
+class RegisterSuccess extends AuthState {}
+
 class UnauthenticatedState extends AuthState {}
 
 class PasswordResetEmailSentState extends AuthState {}

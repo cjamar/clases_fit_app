@@ -1,5 +1,6 @@
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_button.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
@@ -72,9 +73,10 @@ class _RegisterPageState extends State<RegisterPage> {
         name: 'user-name',
       ),
     );
+    _emailController.clear();
+    _passwordController.clear();
+    _confirmPasswordController.clear();
   }
-
-  void _backToLogin() => Navigator.pop(context);
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,18 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.orangeAccent,
-        body: _registerBody(size),
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is RegisterSuccess) {
+              Navigator.pop(context);
+              _showSnackbar('Cuenta creada!!!', Colors.green);
+            }
+            if (state is AuthError) {
+              _showSnackbar('Error, ${state.message}', Colors.red);
+            }
+          },
+          child: _registerBody(size),
+        ),
       ),
     );
   }
@@ -148,4 +161,8 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     ),
   );
+
+  _showSnackbar(String message, Color color) => ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(message), backgroundColor: color));
 }
