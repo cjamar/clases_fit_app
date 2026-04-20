@@ -1,6 +1,7 @@
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:clases_fit_app/features/auth/presentation/pages/sent_reset_password_email.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_button.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
@@ -52,8 +53,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
-  void _backToLogin() => Navigator.pop(context);
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -64,14 +63,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.redAccent,
-        body: BlocListener<AuthBloc, AuthState>(
+        body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is PasswordResetEmailSentState) {
-              return _sentResetPasswordEmail(size);
+            if (state is AuthError) {
+              _snackbar(state.message);
             }
-            if (state is AuthError) return _snackbar(state.message);
+            if (state is PasswordResetEmailSentState) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => SentResetPasswordEmail()),
+              );
+            }
           },
-          child: _resetPasswordBody(context, size),
+          builder: (context, state) {
+            return _resetPasswordBody(context, size);
+          },
         ),
       ),
     );
@@ -92,7 +98,17 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   _imageResetArea(Size size) => SizedBox(
     width: size.width * 0.8,
     height: size.height * 0.4,
-    child: Center(child: Icon(Icons.lock_reset, size: size.width * 0.15)),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.build, size: size.width * 0.15),
+        SizedBox(height: size.height * 0.025),
+        Text(
+          'Restablecer contraseña se encuentra actualmente en construcción',
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
   );
 
   _textResetArea(size) => Container(
@@ -144,50 +160,4 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   _snackbar(String message) => ScaffoldMessenger.of(
     context,
   ).showSnackBar(SnackBar(content: Text('Error, $message')));
-
-  _sentResetPasswordEmail(Size size) => Container(
-    width: size.width,
-    height: size.height,
-    color: Colors.redAccent,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _imageSentEmail(size),
-        _textSentEmail(size),
-        _acceptAndBackButton(size),
-      ],
-    ),
-  );
-
-  _imageSentEmail(Size size) => Container(
-    width: size.width * 0.8,
-    height: size.height * 0.4,
-    color: Colors.lightBlue,
-    child: Center(child: Icon(Icons.send)),
-  );
-
-  _textSentEmail(Size size) => Container(
-    width: size.width * 0.8,
-    height: size.height * 0.5,
-    color: Colors.orange,
-    child: Center(
-      child: Text(
-        'Te hemos enviado instrucciones para reestablecer tu contraseña. Comprueba tu correo.',
-        textAlign: TextAlign.center,
-      ),
-    ),
-  );
-
-  _acceptAndBackButton(Size size) => SizedBox(
-    width: size.width * 0.8,
-    height: size.height * 0.05,
-    child: ElevatedButton(
-      onPressed: _backToLogin,
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: Colors.blue,
-      ),
-      child: Text('Aceptar'),
-    ),
-  );
 }

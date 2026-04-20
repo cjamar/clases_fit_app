@@ -52,7 +52,10 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
 
   @override
   Future<void> resetPassword(String email) async =>
-      supabase.auth.resetPasswordForEmail(email);
+      supabase.auth.resetPasswordForEmail(
+        email,
+        redirectTo: 'clases-fit-app://reset-password',
+      );
 
   @override
   Future<AuthSession?> getCurrentSession() async {
