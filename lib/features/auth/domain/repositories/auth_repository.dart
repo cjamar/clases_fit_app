@@ -11,7 +11,7 @@ abstract class AuthRepository {
     required String password,
     required bool rememberMe,
   });
-  Future<AuthSession> signInWithGoogle();
+  Future<void> signInWithGoogle();
   Future<void> signOut();
   Future<void> resetPassword(String email);
   Future<AuthSession?> getCurrentSession();

@@ -37,13 +37,10 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   }
 
   @override
-  Future<AuthSession> signInWithGoogle() async {
-    await supabase.auth.signInWithOAuth(OAuthProvider.google);
-
-    final user = supabase.auth.currentUser!;
-    return AuthSession(
-      user: UserModel.fromSupabaseUser(user),
-      rememberMe: true,
+  Future<void> signInWithGoogle() async {
+    await supabase.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: 'com.clasesfit.app://login-callback',
     );
   }
 
@@ -54,7 +51,7 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<void> resetPassword(String email) async =>
       supabase.auth.resetPasswordForEmail(
         email,
-        redirectTo: 'clases-fit-app://reset-password',
+        redirectTo: 'com.clasesfit.app://reset-password',
       );
 
   @override

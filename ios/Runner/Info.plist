@@ -2,6 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+
+    <!-- ====================================================
+     	Modificado para Supabase OAuth / Google Login
+    	URL type io.supabase.flutter necesario para
+    	redirección desde Google y login automático
+	==================================================== -->
+	<key>CFBundleURLTypes</key>
+
+<array>
+ <dict>
+ <key>CFBundleURLName</key>
+ <string>com.clasesfit.app</string>
+ <key>CFBundleURLSchemes</key>
+ <array>
+ <string>com.clasesfit.app</string>
+  </array>
+  </dict>
+  </array>
+	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

@@ -1,3 +1,5 @@
+import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
+
 import '../../domain/usecases/get_current_session.dart';
 import '../../domain/usecases/google_sign_in.dart';
 import '../../domain/usecases/reset_password.dart';
@@ -43,6 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
           rememberMe: event.rememberMe,
         );
+        print('SESSION --> ${Supabase.instance.client.auth.currentSession}');
         emit(AuthenticatedState(session.user));
       } catch (e) {
         emit(AuthError(e.toString()));
@@ -68,10 +71,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
 
       try {
-        final session = await googleSignIn();
-        emit(AuthenticatedState(session.user));
+        await googleSignIn();
+        add(AppStarted());
+        // await Future.delayed(const Duration(milliseconds: 500));
+        // final session = await getCurrentSession();
+        // if (session != null) {
+        //   print('SESSION --> ${Supabase.instance.client.auth.currentSession}');
+        //   emit(AuthenticatedState(session.user));
+        // } else {
+        //   emit(UnauthenticatedState());
+        // }
       } catch (e) {
         emit(AuthError(e.toString()));
+        print('GOOGLE SIGNIN ERROR --> ${e.toString()}');
       }
     });
 
