@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:clases_fit_app/features/auth/domain/usecases/update_password.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthChangeEvent, Supabase;
 import '../../../user/data/models/user_model.dart';
@@ -19,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignOut signOut;
   final GetCurrentSession getCurrentSession;
   final ResetPassword resetPassword;
+  final UpdatePassword updatePassword;
   late final StreamSubscription _authSub;
 
   AuthBloc({
@@ -28,6 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.signOut,
     required this.getCurrentSession,
     required this.resetPassword,
+    required this.updatePassword,
   }) : super(AuthInitialState()) {
     _authSub = Supabase.instance.client.auth.onAuthStateChange.listen((data) {
       if (data.event == AuthChangeEvent.passwordRecovery) {
@@ -107,6 +110,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await resetPassword(email: event.email);
         emit(PasswordResetEmailSentState());
+      } catch (e) {
+        emit(AuthError(e.toString()));
+      }
+    });
+
+    on<UpdatePasswordRequested>((event, emit) async {
+      try {
+        await updatePassword(newPassword: event.newPassword);
+        emit(PasswordUpdatedState());
       } catch (e) {
         emit(AuthError(e.toString()));
       }

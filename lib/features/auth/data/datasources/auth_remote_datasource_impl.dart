@@ -55,6 +55,10 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
       );
 
   @override
+  Future<void> updatePassword(String newPassword) async =>
+      supabase.auth.updateUser(UserAttributes(password: newPassword));
+
+  @override
   Future<AuthSession?> getCurrentSession() async {
     final user = supabase.auth.currentUser;
 

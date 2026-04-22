@@ -10,6 +10,7 @@ import 'features/auth/domain/usecases/reset_password.dart';
 import 'features/auth/domain/usecases/sign_in.dart';
 import 'features/auth/domain/usecases/sign_out.dart';
 import 'features/auth/domain/usecases/sign_up.dart';
+import 'features/auth/domain/usecases/update_password.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
 
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
   late final signOut = SignOut(authRepository);
   late final getCurrentSession = GetCurrentSession(authRepository);
   late final resetPassword = ResetPassword(authRepository);
+  late final updatePassword = UpdatePassword(authRepository);
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class MyApp extends StatelessWidget {
             signOut: signOut,
             getCurrentSession: getCurrentSession,
             resetPassword: resetPassword,
+            updatePassword: updatePassword,
           )..add(AppStarted()),
         ),
       ],

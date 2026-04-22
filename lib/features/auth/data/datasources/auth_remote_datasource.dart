@@ -6,5 +6,6 @@ abstract class AuthRemoteDatasource {
   Future<void> signInWithGoogle();
   Future<void> signOut();
   Future<void> resetPassword(String email);
+  Future<void> updatePassword(String newPassword);
   Future<AuthSession?> getCurrentSession();
 }

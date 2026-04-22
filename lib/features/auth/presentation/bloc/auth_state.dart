@@ -31,6 +31,8 @@ class PasswordResetViewState extends AuthState {}
 
 class PasswordResetEmailSentState extends AuthState {}
 
+class PasswordUpdatedState extends AuthState {}
+
 class PasswordRecoveryState extends AuthState {}
 
 class AuthError extends AuthState {

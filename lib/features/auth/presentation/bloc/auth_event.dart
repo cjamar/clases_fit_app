@@ -54,6 +54,14 @@ class ResetPasswordRequested extends AuthEvent {
   List<Object?> get props => [email];
 }
 
+class UpdatePasswordRequested extends AuthEvent {
+  final String newPassword;
+  const UpdatePasswordRequested(this.newPassword);
+
+  @override
+  List<Object?> get props => [newPassword];
+}
+
 class PasswordResetView extends AuthEvent {}
 
 class PasswordRecoveryDetected extends AuthEvent {}
