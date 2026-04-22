@@ -27,10 +27,10 @@
             </intent-filter>
 
               <!-- ====================================================
-                 Modificado para Supabase OAuth / Google Login
-                 No borrar: necesario para que com.clasesfit.app://login-callback
-                 funcione correctamente con deep link y AuthBloc
-                 launchMode cambiado a singleTask para evitar duplicados
+                 Modificado para Supabase OAuth / Google Login y Reset Password
+                 No borrar: necesario para que com.clasesfit.app://login-callback 
+                 y com.clasesfit.app://reset-password funcionen correctamente 
+                 con deep link y AuthBloc launchMode cambiado a singleTask para evitar duplicados
                 ==================================================== -->
            <intent-filter>
               <action android:name="android.intent.action.VIEW"/>
@@ -40,6 +40,16 @@
              <data
               android:scheme="com.clasesfit.app"
               android:host="login-callback"/>
+            </intent-filter>
+
+             <intent-filter>
+              <action android:name="android.intent.action.VIEW"/>
+              <category android:name="android.intent.category.DEFAULT"/>
+             <category android:name="android.intent.category.BROWSABLE"/>
+
+             <data
+              android:scheme="com.clasesfit.app"
+              android:host="reset-password"/>
             </intent-filter>
            
         </activity>

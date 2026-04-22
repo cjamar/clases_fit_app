@@ -25,6 +25,8 @@ class LoginRequested extends AuthEvent {
   List<Object?> get props => [email, password, rememberMe];
 }
 
+class LoginView extends AuthEvent {}
+
 class RegisterRequested extends AuthEvent {
   final String email;
   final String password;
@@ -40,6 +42,8 @@ class RegisterRequested extends AuthEvent {
   List<Object?> get props => [email, password, name];
 }
 
+class RegisterView extends AuthEvent {}
+
 class GoogleLoginRequested extends AuthEvent {}
 
 class ResetPasswordRequested extends AuthEvent {
@@ -49,6 +53,12 @@ class ResetPasswordRequested extends AuthEvent {
   @override
   List<Object?> get props => [email];
 }
+
+class PasswordResetView extends AuthEvent {}
+
+class PasswordRecoveryDetected extends AuthEvent {}
+
+class PasswordResetCompleted extends AuthEvent {}
 
 class LogoutRequested extends AuthEvent {}
 

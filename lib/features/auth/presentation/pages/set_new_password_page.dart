@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_button.dart';
 import 'package:flutter/material.dart';
 
 class SetNewPasswordPage extends StatelessWidget {
@@ -17,13 +18,7 @@ class SetNewPasswordPage extends StatelessWidget {
           children: [
             Text('Set New Password Page'),
             SizedBox(height: size.height * 0.05),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Volver a Login -->',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+            AuthBackButton(size: size, name: 'Volver a Login -->'),
           ],
         ),
       ),

@@ -1,14 +1,13 @@
-import 'package:clases_fit_app/features/auth/presentation/pages/login_page.dart';
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/auth_bloc.dart';
 
 class SentResetPasswordEmail extends StatelessWidget {
   const SentResetPasswordEmail({super.key});
 
-  _backToLogin(BuildContext context) => Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(builder: (context) => LoginPage()),
-    (Route<dynamic> route) => false,
-  );
+  _backToLogin(BuildContext context) =>
+      context.read<AuthBloc>().add(LoginView());
 
   @override
   Widget build(BuildContext context) {

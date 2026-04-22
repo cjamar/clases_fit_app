@@ -3,7 +3,6 @@ import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_button.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
-import 'package:clases_fit_app/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_name_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_password_field.dart';
@@ -106,8 +105,8 @@ class _RegisterPageState extends State<RegisterPage> {
         body: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is RegisterSuccess) {
-              Navigator.pop(context);
               _showSnackbar('Cuenta creada!!!', Colors.green);
+              context.read<AuthBloc>().add(LoginView());
             }
             if (state is AuthError) {
               _showSnackbar('Error, ${state.message}', Colors.red);

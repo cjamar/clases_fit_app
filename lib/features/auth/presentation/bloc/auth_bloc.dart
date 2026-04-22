@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
+import 'package:supabase_flutter/supabase_flutter.dart'
+    show AuthChangeEvent, Supabase;
 import '../../../user/data/models/user_model.dart';
 import '../../domain/usecases/get_current_session.dart';
 import '../../domain/usecases/google_sign_in.dart';
@@ -29,10 +30,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.resetPassword,
   }) : super(AuthInitialState()) {
     _authSub = Supabase.instance.client.auth.onAuthStateChange.listen((data) {
-      final supaUser = data.session?.user;
+      if (data.event == AuthChangeEvent.passwordRecovery) {
+        add(PasswordRecoveryDetected());
+        return;
+      }
+      if (state is PasswordRecoveryState) return;
 
-      final user = supaUser != null
-          ? UserModel.fromSupabaseUser(supaUser)
+      final session = data.session;
+      final user = session?.user != null
+          ? UserModel.fromSupabaseUser(session!.user)
           : null;
 
       add(AuthStateChanged(user));
@@ -57,11 +63,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
           rememberMe: event.rememberMe,
         );
-        print('SESSION --> ${Supabase.instance.client.auth.currentSession}');
         emit(AuthenticatedState(session.user));
       } catch (e) {
         emit(AuthError(e.toString()));
       }
+    });
+
+    on<LoginView>((event, emit) async {
+      emit(LoginViewState());
     });
 
     on<RegisterRequested>((event, emit) async {
@@ -77,6 +86,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (e) {
         emit(AuthError(e.toString()));
       }
+    });
+
+    on<RegisterView>((event, emit) async {
+      emit(RegisterViewState());
     });
 
     on<GoogleLoginRequested>((event, emit) async {
@@ -99,6 +112,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
+    on<PasswordResetView>((event, emit) async {
+      emit(PasswordResetViewState());
+    });
+
+    on<PasswordRecoveryDetected>((event, emit) async {
+      emit(PasswordRecoveryState());
+    });
+
+    on<PasswordResetCompleted>((event, emit) async {
+      emit(UnauthenticatedState());
+    });
+
     on<LogoutRequested>((event, emit) async {
       emit(AuthLoading());
       await signOut();
@@ -106,6 +131,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<AuthStateChanged>((event, emit) {
+      if (state is PasswordRecoveryState) return;
       if (event.user != null) {
         emit(AuthenticatedState(event.user!));
       } else {

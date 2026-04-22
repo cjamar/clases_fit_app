@@ -9,8 +9,6 @@ import '../widgets/auth_form.dart';
 import '../widgets/auth_google_button.dart';
 import '../widgets/auth_password_field.dart';
 import '../widgets/auth_submit_button.dart';
-import 'register_page.dart';
-import 'reset_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -73,15 +71,10 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.clear();
   }
 
-  void _goToRegister() => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const RegisterPage()),
-  );
+  void _goToRegister() => context.read<AuthBloc>().add(RegisterView());
 
-  void _goToResetPassword() => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const ResetPasswordPage()),
-  );
+  void _goToResetPassword() =>
+      context.read<AuthBloc>().add(PasswordResetView());
 
   _googleSignIn() => context.read<AuthBloc>().add(GoogleLoginRequested());
 

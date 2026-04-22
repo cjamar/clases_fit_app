@@ -19,11 +19,19 @@ class AuthenticatedState extends AuthState {
   List<Object?> get props => [user];
 }
 
+class LoginViewState extends AuthState {}
+
 class RegisterSuccess extends AuthState {}
+
+class RegisterViewState extends AuthState {}
 
 class UnauthenticatedState extends AuthState {}
 
+class PasswordResetViewState extends AuthState {}
+
 class PasswordResetEmailSentState extends AuthState {}
+
+class PasswordRecoveryState extends AuthState {}
 
 class AuthError extends AuthState {
   final String message;

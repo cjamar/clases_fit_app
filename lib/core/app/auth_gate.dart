@@ -1,10 +1,14 @@
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
+import 'package:clases_fit_app/features/auth/presentation/pages/register_page.dart';
+import 'package:clases_fit_app/features/auth/presentation/pages/reset_password_page.dart';
+import 'package:clases_fit_app/features/auth/presentation/pages/set_new_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/sent_reset_password_email.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -14,6 +18,21 @@ class AuthGate extends StatelessWidget {
     builder: (context, state) {
       if (state is AuthenticatedState) {
         return _homePage(context);
+      }
+      if (state is LoginViewState) {
+        return LoginPage();
+      }
+      if (state is RegisterViewState) {
+        return RegisterPage();
+      }
+      if (state is PasswordResetViewState) {
+        return ResetPasswordPage();
+      }
+      if (state is PasswordResetEmailSentState) {
+        return SentResetPasswordEmail();
+      }
+      if (state is PasswordRecoveryState) {
+        return SetNewPasswordPage();
       }
       if (state is UnauthenticatedState) {
         return LoginPage();

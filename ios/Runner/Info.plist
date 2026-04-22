@@ -10,16 +10,16 @@
 	==================================================== -->
 	<key>CFBundleURLTypes</key>
 
-<array>
- <dict>
- <key>CFBundleURLName</key>
- <string>com.clasesfit.app</string>
- <key>CFBundleURLSchemes</key>
- <array>
- <string>com.clasesfit.app</string>
-  </array>
-  </dict>
-  </array>
+	<array>
+ 		<dict>
+ 		<key>CFBundleURLName</key>
+ 		<string>com.clasesfit.app</string>
+ 		<key>CFBundleURLSchemes</key>
+ 	<array>
+ 		<string>com.clasesfit.app</string>
+ 	 </array>
+ 		 </dict>
+ 	 </array>
 	
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

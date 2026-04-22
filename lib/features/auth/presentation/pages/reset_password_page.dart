@@ -1,7 +1,6 @@
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/sent_reset_password_email.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_back_button.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_email_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
@@ -51,6 +50,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     context.read<AuthBloc>().add(
       ResetPasswordRequested(email: _emailController.text.trim()),
     );
+    _emailController.clear();
   }
 
   @override
@@ -67,12 +67,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           listener: (context, state) {
             if (state is AuthError) {
               _snackbar(state.message);
-            }
-            if (state is PasswordResetEmailSentState) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => SentResetPasswordEmail()),
-              );
             }
           },
           builder: (context, state) {

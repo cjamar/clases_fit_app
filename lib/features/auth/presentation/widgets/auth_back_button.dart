@@ -1,4 +1,7 @@
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBackButton extends StatelessWidget {
   final Size size;
@@ -13,7 +16,7 @@ class AuthBackButton extends StatelessWidget {
 
       child: TextButton(
         style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => context.read<AuthBloc>().add(LoginView()),
         child: Text(name),
       ),
     );
