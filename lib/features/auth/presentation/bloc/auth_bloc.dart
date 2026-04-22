@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:supabase_flutter/supabase_flutter.dart' show Supabase;
-
+import '../../../user/data/models/user_model.dart';
 import '../../domain/usecases/get_current_session.dart';
 import '../../domain/usecases/google_sign_in.dart';
 import '../../domain/usecases/reset_password.dart';
@@ -17,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignOut signOut;
   final GetCurrentSession getCurrentSession;
   final ResetPassword resetPassword;
+  late final StreamSubscription _authSub;
 
   AuthBloc({
     required this.signIn,
@@ -26,6 +28,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.getCurrentSession,
     required this.resetPassword,
   }) : super(AuthInitialState()) {
+    _authSub = Supabase.instance.client.auth.onAuthStateChange.listen((data) {
+      final supaUser = data.session?.user;
+
+      final user = supaUser != null
+          ? UserModel.fromSupabaseUser(supaUser)
+          : null;
+
+      add(AuthStateChanged(user));
+    });
+
     on<AppStarted>((event, emit) async {
       emit(AuthLoading());
 
@@ -72,18 +84,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       try {
         await googleSignIn();
-        add(AppStarted());
-        // await Future.delayed(const Duration(milliseconds: 500));
-        // final session = await getCurrentSession();
-        // if (session != null) {
-        //   print('SESSION --> ${Supabase.instance.client.auth.currentSession}');
-        //   emit(AuthenticatedState(session.user));
-        // } else {
-        //   emit(UnauthenticatedState());
-        // }
       } catch (e) {
         emit(AuthError(e.toString()));
-        print('GOOGLE SIGNIN ERROR --> ${e.toString()}');
       }
     });
 
@@ -102,5 +104,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await signOut();
       emit(UnauthenticatedState());
     });
+
+    on<AuthStateChanged>((event, emit) {
+      if (event.user != null) {
+        emit(AuthenticatedState(event.user!));
+      } else {
+        emit(UnauthenticatedState());
+      }
+    });
+  }
+  @override
+  Future<void> close() {
+    _authSub.cancel();
+    return super.close();
   }
 }

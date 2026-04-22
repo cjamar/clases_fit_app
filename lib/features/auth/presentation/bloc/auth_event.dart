@@ -1,5 +1,5 @@
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
 import 'package:equatable/equatable.dart';
+import '../../../user/domain/entities/user.dart';
 
 abstract class AuthEvent extends Equatable {
   const AuthEvent();
@@ -51,3 +51,11 @@ class ResetPasswordRequested extends AuthEvent {
 }
 
 class LogoutRequested extends AuthEvent {}
+
+class AuthStateChanged extends AuthEvent {
+  final User? user;
+  const AuthStateChanged(this.user);
+
+  @override
+  List<Object?> get props => [user];
+}
