@@ -88,9 +88,7 @@ class _SetNewPasswordPageState extends State<SetNewPasswordPage> {
     );
   }
 
-  _setNewPasswordBody(Size size) => SizedBox(
-    width: size.width,
-    height: size.height,
+  _setNewPasswordBody(Size size) => SingleChildScrollView(
     child: Column(children: [_imageRegisterArea(size), _formArea(size)]),
   );
 
@@ -128,7 +126,7 @@ class _SetNewPasswordPageState extends State<SetNewPasswordPage> {
                 label: 'Confirmar contraseña',
                 size: size,
               ),
-              SizedBox(height: size.height * 0.15),
+              SizedBox(height: size.height * 0.23),
             ],
             submitButton: ValueListenableBuilder<bool>(
               valueListenable: _isValid,

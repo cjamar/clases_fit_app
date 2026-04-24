@@ -32,7 +32,7 @@ class AuthGate extends StatelessWidget {
         return SentResetPasswordEmail();
       }
       if (state is PasswordRecoveryState) {
-        return SetNewPasswordPage();
+        return SetNewPasswordPage(); // TODO: USAR SUPABASE PARA MANDAR UN EMAIL DE QUE HEMOS CAMBIADO LA CONTRASEÑA
       }
       if (state is UnauthenticatedState) {
         return LoginPage();

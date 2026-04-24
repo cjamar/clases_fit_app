@@ -61,7 +61,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       behavior: HitTestBehavior.translucent,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.redAccent,
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -77,9 +76,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
-  _resetPasswordBody(BuildContext context, Size size) => SizedBox(
-    height: size.height,
-    width: size.width,
+  _resetPasswordBody(BuildContext context, Size size) => SingleChildScrollView(
+    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
     child: Column(
       children: [
         _imageResetArea(size),
@@ -95,12 +93,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.build, size: size.width * 0.15),
+        Icon(Icons.password, size: size.width * 0.15),
         SizedBox(height: size.height * 0.025),
-        Text(
-          'Restablecer contraseña se encuentra actualmente en construcción',
-          textAlign: TextAlign.center,
-        ),
+        Text('Cambiar contraseña', textAlign: TextAlign.center),
       ],
     ),
   );

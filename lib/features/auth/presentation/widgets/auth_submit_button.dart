@@ -30,7 +30,7 @@ class AuthSubmitButton extends StatelessWidget {
               foregroundColor: Colors.white,
               disabledBackgroundColor: Colors.grey.shade300,
               disabledForegroundColor: Colors.white,
-              backgroundColor: Colors.blue,
+              backgroundColor: Color(0xffFF725E),
             ),
             child: isLoading ? const CircularProgressIndicator() : Text(text),
           ),

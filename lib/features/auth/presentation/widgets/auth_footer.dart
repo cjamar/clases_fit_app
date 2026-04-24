@@ -53,7 +53,7 @@ class AuthFooter extends StatelessWidget {
           if (value != null) onRememberChanged?.call(value);
         },
         shape: RoundedRectangleBorder(),
-        activeColor: Colors.blue,
+        activeColor: Color(0xffFF725E),
       ),
       Text('Recordarme'),
     ],
@@ -63,13 +63,14 @@ class AuthFooter extends StatelessWidget {
     onPressed: onForgotPasswordTap,
     child: Text(
       '¿Olvidaste la contraseña?',
-      style: TextStyle(color: Colors.blue),
+      style: TextStyle(color: Color(0xffFF725E)),
     ),
   );
 
   _registerNowButton(Size size) => TextButton(
     style: TextButton.styleFrom(
-      backgroundColor: Colors.grey.shade200,
+      backgroundColor: Color.fromARGB(255, 255, 235, 233),
+      foregroundColor: Color.fromARGB(255, 197, 60, 42),
       padding: EdgeInsets.symmetric(
         vertical: size.width * 0.025,
         horizontal: size.width * 0.04,

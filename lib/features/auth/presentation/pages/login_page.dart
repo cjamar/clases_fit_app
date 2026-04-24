@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.white,
         body: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
@@ -106,9 +106,10 @@ class _LoginPageState extends State<LoginPage> {
     child: Column(children: [_logoArea(size), _formArea(context, size)]),
   );
 
-  _logoArea(Size size) => SizedBox(
+  _logoArea(Size size) => Container(
     height: size.height * 0.35,
-    child: Center(child: Icon(Icons.logo_dev, size: size.width * 0.15)),
+    padding: EdgeInsets.only(top: size.height * 0.05),
+    child: Image(image: AssetImage('assets/images/02.png')),
   );
 
   _formArea(BuildContext context, Size size) => Container(

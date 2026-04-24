@@ -100,7 +100,6 @@ class _RegisterPageState extends State<RegisterPage> {
       behavior: HitTestBehavior.translucent,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.orangeAccent,
         body: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
@@ -118,9 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  _registerBody(Size size) => SizedBox(
-    width: size.width,
-    height: size.height,
+  _registerBody(Size size) => SingleChildScrollView(
     child: Column(children: [_imageRegisterArea(size), _formArea(size)]),
   );
 
