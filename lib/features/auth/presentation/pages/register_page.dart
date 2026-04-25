@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
@@ -100,15 +101,15 @@ class _RegisterPageState extends State<RegisterPage> {
       behavior: HitTestBehavior.translucent,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: StylesApp.whiteColor,
         body: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is RegisterSuccess) {
-              _showSnackbar('Cuenta creada!!!', Colors.green);
+              _showSnackbar('Cuenta creada!!!', StylesApp.primaryColor);
               context.read<AuthBloc>().add(LoginView());
             }
             if (state is AuthError) {
-              _showSnackbar('Error, ${state.message}', Colors.red);
+              _showSnackbar('Error, ${state.message}', StylesApp.alertColor);
             }
           },
           child: _registerBody(size),
@@ -121,16 +122,16 @@ class _RegisterPageState extends State<RegisterPage> {
     child: Column(children: [_imageRegisterArea(size), _formArea(size)]),
   );
 
-  _imageRegisterArea(Size size) => SizedBox(
-    width: size.width * 0.8,
-    height: size.height * 0.35,
-    child: Center(child: Icon(Icons.key, size: size.width * 0.15)),
+  _imageRegisterArea(Size size) => Container(
+    height: size.height * 0.3,
+    margin: EdgeInsets.only(top: size.height * 0.05),
+    child: Center(child: Image(image: AssetImage('assets/images/03.png'))),
   );
 
   _formArea(Size size) => Container(
     height: size.height * 0.65,
     width: size.width,
-    color: Colors.white,
+    color: StylesApp.whiteColor,
     child: Form(
       key: _formKey,
       child: Column(

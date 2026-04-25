@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,10 @@ class AuthBackButton extends StatelessWidget {
       width: size.width,
 
       child: TextButton(
-        style: TextButton.styleFrom(shape: RoundedRectangleBorder()),
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(),
+          foregroundColor: StylesApp.blackColor,
+        ),
         onPressed: () => context.read<AuthBloc>().add(LoginView()),
         child: Text(name),
       ),

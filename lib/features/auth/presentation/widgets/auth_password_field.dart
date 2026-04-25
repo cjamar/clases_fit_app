@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:flutter/material.dart';
 
 class AuthPasswordField extends StatefulWidget {
@@ -34,11 +35,11 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
           decoration: InputDecoration(
             hintText: widget.label,
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor: StylesApp.greyColor100,
             border: _inputBorder(widget.size, Colors.transparent),
             enabledBorder: _inputBorder(widget.size, Colors.transparent),
             focusedErrorBorder: _inputBorder(widget.size, Colors.transparent),
-            focusedBorder: _inputBorder(widget.size, Colors.blue),
+            focusedBorder: _inputBorder(widget.size, StylesApp.primaryColor),
             suffixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -59,7 +60,7 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
     }),
     icon: Icon(
       _obscureText ? Icons.visibility : Icons.visibility_off,
-      color: Colors.grey.shade500,
+      color: StylesApp.greyColor500,
     ),
   );
 
@@ -67,7 +68,7 @@ class _AuthPasswordFieldState extends State<AuthPasswordField> {
     onPressed: widget.controller.clear,
     icon: Icon(
       Icons.close,
-      color: Colors.black54,
+      color: StylesApp.greyColor600,
       size: widget.size.width * 0.05,
     ),
   );

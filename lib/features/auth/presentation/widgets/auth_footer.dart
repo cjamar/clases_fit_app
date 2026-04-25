@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:flutter/material.dart';
 
 class AuthFooter extends StatelessWidget {
@@ -29,7 +30,6 @@ class AuthFooter extends StatelessWidget {
   _registerArea(Size size) => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      //  if (onForgotPasswordTap != null) _forgotPasswordButton(size),
       Text('¿Todavia no te has registrado?', style: TextStyle(fontSize: 13)),
       SizedBox(width: size.width * 0.03),
       if (onRegisterTap != null) _registerNowButton(size),
@@ -53,7 +53,7 @@ class AuthFooter extends StatelessWidget {
           if (value != null) onRememberChanged?.call(value);
         },
         shape: RoundedRectangleBorder(),
-        activeColor: Color(0xffFF725E),
+        activeColor: StylesApp.primaryColor,
       ),
       Text('Recordarme'),
     ],
@@ -63,14 +63,14 @@ class AuthFooter extends StatelessWidget {
     onPressed: onForgotPasswordTap,
     child: Text(
       '¿Olvidaste la contraseña?',
-      style: TextStyle(color: Color(0xffFF725E)),
+      style: TextStyle(color: StylesApp.primaryColor),
     ),
   );
 
   _registerNowButton(Size size) => TextButton(
     style: TextButton.styleFrom(
-      backgroundColor: Color.fromARGB(255, 255, 235, 233),
-      foregroundColor: Color.fromARGB(255, 197, 60, 42),
+      backgroundColor: StylesApp.primaryColorLight,
+      foregroundColor: StylesApp.primaryColor,
       padding: EdgeInsets.symmetric(
         vertical: size.width * 0.025,
         horizontal: size.width * 0.04,

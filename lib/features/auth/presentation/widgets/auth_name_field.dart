@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:flutter/material.dart';
 
 class AuthNameField extends StatelessWidget {
@@ -25,11 +26,11 @@ class AuthNameField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: 'Nombre de usuario',
             filled: true,
-            fillColor: Colors.grey.shade200,
+            fillColor: StylesApp.greyColor100,
             border: _inputBorder(size, Colors.transparent),
             enabledBorder: _inputBorder(size, Colors.transparent),
             focusedErrorBorder: _inputBorder(size, Colors.transparent),
-            focusedBorder: _inputBorder(size, Colors.blue),
+            focusedBorder: _inputBorder(size, StylesApp.primaryColor),
             suffixIcon: value.text.isNotEmpty && focusNode.hasFocus
                 ? _clearIconButton(size)
                 : null,
@@ -47,7 +48,11 @@ class AuthNameField extends StatelessWidget {
 
   _clearIconButton(Size size) => IconButton(
     onPressed: controller.clear,
-    icon: Icon(Icons.close, color: Colors.black54, size: size.width * 0.05),
+    icon: Icon(
+      Icons.close,
+      color: StylesApp.greyColor500,
+      size: size.width * 0.05,
+    ),
   );
 
   _inputBorder(Size size, Color color) => OutlineInputBorder(

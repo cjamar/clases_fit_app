@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
 import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
@@ -61,7 +62,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       behavior: HitTestBehavior.translucent,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: StylesApp.alertColor,
         body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
@@ -104,7 +105,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     width: size.width,
     height: size.height * 0.15,
     padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-    color: Colors.white,
+    decoration: BoxDecoration(
+      color: StylesApp.whiteColor,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(size.width * 0.07),
+        topRight: Radius.circular(size.width * 0.07),
+      ),
+    ),
     child: Center(
       child: Text(
         'Escribe tu email y te enviaremos las instrucciones para reestablecer tu contraseña',

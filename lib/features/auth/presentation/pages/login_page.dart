@@ -1,8 +1,9 @@
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_state.dart';
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
 import '../widgets/auth_email_field.dart';
 import '../widgets/auth_footer.dart';
 import '../widgets/auth_form.dart';
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: StylesApp.secondaryColor,
         body: BlocListener<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthError) {
@@ -107,15 +108,26 @@ class _LoginPageState extends State<LoginPage> {
   );
 
   _logoArea(Size size) => Container(
-    height: size.height * 0.35,
-    padding: EdgeInsets.only(top: size.height * 0.05),
-    child: Image(image: AssetImage('assets/images/02.png')),
+    height: size.height * 0.3,
+    margin: EdgeInsets.only(top: size.height * 0.05),
+    child: Icon(
+      Icons.logo_dev,
+      size: size.width * 0.15,
+      color: StylesApp.primaryColor,
+    ),
   );
 
   _formArea(BuildContext context, Size size) => Container(
     height: size.height * 0.65,
     width: size.width,
-    color: Colors.white,
+    padding: EdgeInsets.only(top: size.height * 0.025),
+    decoration: BoxDecoration(
+      color: StylesApp.whiteColor,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(size.width * 0.07),
+        topRight: Radius.circular(size.width * 0.07),
+      ),
+    ),
     child: Form(
       key: _formKey,
       child: AuthForm(

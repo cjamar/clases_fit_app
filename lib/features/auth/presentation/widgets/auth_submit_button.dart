@@ -1,3 +1,4 @@
+import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/auth_bloc.dart';
@@ -30,7 +31,7 @@ class AuthSubmitButton extends StatelessWidget {
               foregroundColor: Colors.white,
               disabledBackgroundColor: Colors.grey.shade300,
               disabledForegroundColor: Colors.white,
-              backgroundColor: Color(0xffFF725E),
+              backgroundColor: StylesApp.primaryColor,
             ),
             child: isLoading ? const CircularProgressIndicator() : Text(text),
           ),
