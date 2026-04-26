@@ -12,4 +12,7 @@ class StylesApp {
   static Color greyColor100 = Colors.grey.shade100;
   static Color greyColor500 = Colors.grey.shade500;
   static Color greyColor600 = Colors.grey.shade600;
+
+  // TextStyles
+  static TextStyle titleTextStyle = TextStyle(fontSize: 18, color: blackColor);
 }

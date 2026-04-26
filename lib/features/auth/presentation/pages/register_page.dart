@@ -125,7 +125,15 @@ class _RegisterPageState extends State<RegisterPage> {
   _imageRegisterArea(Size size) => Container(
     height: size.height * 0.3,
     margin: EdgeInsets.only(top: size.height * 0.05),
-    child: Center(child: Image(image: AssetImage('assets/images/03.png'))),
+    child: Column(
+      children: [
+        Image(
+          image: AssetImage('assets/images/03.png'),
+          width: size.width * 0.5,
+        ),
+        Text('Crea una cuenta', style: StylesApp.titleTextStyle),
+      ],
+    ),
   );
 
   _formArea(Size size) => Container(
