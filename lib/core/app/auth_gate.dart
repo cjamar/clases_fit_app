@@ -4,7 +4,6 @@ import 'package:clases_fit_app/features/auth/presentation/pages/reset_password_p
 import 'package:clases_fit_app/features/auth/presentation/pages/set_new_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
