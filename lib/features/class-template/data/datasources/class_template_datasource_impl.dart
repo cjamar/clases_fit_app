@@ -2,7 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/class_template_model.dart';
 import 'class_template_datasource.dart';
 
-class ClassTemplateDatasourceImpl extends ClassTemplateDatasource {
+class ClassTemplateDatasourceImpl implements ClassTemplateDatasource {
   final SupabaseClient supabase;
   ClassTemplateDatasourceImpl(this.supabase);
 

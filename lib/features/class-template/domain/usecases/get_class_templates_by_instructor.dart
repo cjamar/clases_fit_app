@@ -6,5 +6,5 @@ class GetClassTemplatesByInstructor {
   GetClassTemplatesByInstructor(this.repository);
 
   Future<List<ClassTemplate>> call(String instructorId) async =>
-      repository.getClassTemplatesByInstructor(instructorId);
+      await repository.getClassTemplatesByInstructor(instructorId);
 }

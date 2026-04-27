@@ -6,5 +6,5 @@ class UpdateClassTemplate {
   UpdateClassTemplate(this.repository);
 
   Future<void> call(ClassTemplate classTemplate) async =>
-      repository.updateClassTemplate(classTemplate);
+      await repository.updateClassTemplate(classTemplate);
 }

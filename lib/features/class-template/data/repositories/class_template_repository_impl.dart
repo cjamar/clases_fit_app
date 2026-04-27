@@ -45,5 +45,5 @@ class ClassTemplateRepositoryImpl extends ClassTemplateRepository {
 
   @override
   Future<void> deleteClassTemplate(String classTemplateId) async =>
-      datasource.deleteClassTemplate(classTemplateId);
+      await datasource.deleteClassTemplate(classTemplateId);
 }

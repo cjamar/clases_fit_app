@@ -5,5 +5,5 @@ class DeleteClassTemplate {
   DeleteClassTemplate(this.repository);
 
   Future<void> call(String classTemplateId) async =>
-      repository.deleteClassTemplate(classTemplateId);
+      await repository.deleteClassTemplate(classTemplateId);
 }

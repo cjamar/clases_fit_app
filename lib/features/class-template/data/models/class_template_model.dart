@@ -32,6 +32,6 @@ class ClassTemplateModel extends ClassTemplate {
     'duration_minutes': durationMinutes,
     'min_capacity': minCapacity,
     'max_capacity': maxCapacity,
-    'created_at': createdAt,
+    'created_at': createdAt.toIso8601String(),
   };
 }
