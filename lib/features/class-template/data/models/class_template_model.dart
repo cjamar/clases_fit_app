@@ -21,7 +21,7 @@ class ClassTemplateModel extends ClassTemplate {
         durationMinutes: json['duration_minutes'],
         minCapacity: json['min_capacity'],
         maxCapacity: json['max_capacity'],
-        createdAt: json['created_at'],
+        createdAt: DateTime.parse(json['created_at']),
       );
 
   Map<String, dynamic> toJson() => {

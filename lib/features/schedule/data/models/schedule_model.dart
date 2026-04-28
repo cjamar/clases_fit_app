@@ -12,7 +12,7 @@ class ScheduleModel extends Schedule {
     id: json['id'],
     instructorId: json['instructor_id'],
     name: json['name'],
-    createdAt: json['created_at'],
+    createdAt: DateTime.parse(json['created_at']),
   );
 
   Map<String, dynamic> toJson() => {
