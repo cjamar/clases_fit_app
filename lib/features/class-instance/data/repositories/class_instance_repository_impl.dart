@@ -8,7 +8,7 @@ class ClassInstanceRepositoryImpl implements ClassInstanceRepository {
   ClassInstanceRepositoryImpl(this.datasource);
 
   @override
-  Future<List<ClassInstance>> getClassInstance(
+  Future<List<ClassInstance>> getClassInstances(
     String scheduleId,
     DateTime startTime,
     DateTime endTime,

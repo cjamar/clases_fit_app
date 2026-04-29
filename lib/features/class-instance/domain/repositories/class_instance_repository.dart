@@ -1,7 +1,7 @@
 import '../entities/class_instance.dart';
 
 abstract class ClassInstanceRepository {
-  Future<List<ClassInstance>> getClassInstance(
+  Future<List<ClassInstance>> getClassInstances(
     String scheduleId,
     DateTime startTime,
     DateTime endTime,

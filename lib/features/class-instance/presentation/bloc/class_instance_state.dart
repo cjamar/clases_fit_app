@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import '../../domain/entities/class_instance.dart';
 
 abstract class ClassInstanceState extends Equatable {

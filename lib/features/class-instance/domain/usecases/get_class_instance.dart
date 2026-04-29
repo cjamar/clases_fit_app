@@ -9,5 +9,6 @@ class GetClassInstances {
     required String scheduleId,
     required DateTime startTime,
     required DateTime endTime,
-  }) async => await repository.getClassInstance(scheduleId, startTime, endTime);
+  }) async =>
+      await repository.getClassInstances(scheduleId, startTime, endTime);
 }

@@ -8,15 +8,15 @@ import 'weekly_slot_state.dart';
 
 class WeeklySlotBloc extends Bloc<WeeklySlotEvent, WeeklySlotState> {
   final GetWeeklySlotsBySchedule getWeeklySlotsBySchedule;
-  final CreateWeeklySlot createWeeklySlots;
-  final UpdateWeeklySlot updateWeeklySlots;
-  final DeleteWeeklySlot deleteWeeklySlots;
+  final CreateWeeklySlot createWeeklySlot;
+  final UpdateWeeklySlot updateWeeklySlot;
+  final DeleteWeeklySlot deleteWeeklySlot;
 
   WeeklySlotBloc({
     required this.getWeeklySlotsBySchedule,
-    required this.createWeeklySlots,
-    required this.updateWeeklySlots,
-    required this.deleteWeeklySlots,
+    required this.createWeeklySlot,
+    required this.updateWeeklySlot,
+    required this.deleteWeeklySlot,
   }) : super(WeeklySlotInitial()) {
     on<LoadWeeklySlotsEvent>((event, emit) async {
       emit(WeeklySlotLoading());
@@ -29,7 +29,7 @@ class WeeklySlotBloc extends Bloc<WeeklySlotEvent, WeeklySlotState> {
     on<CreateWeeklySlotsEvent>((event, emit) async {
       emit(WeeklySlotLoading());
       try {
-        await createWeeklySlots(event.weeklySlot);
+        await createWeeklySlot(event.weeklySlot);
         await _reloadWeeklySlots(emit, event.weeklySlot.scheduleId);
       } catch (e) {
         emit(WeeklySlotError(e.toString()));
@@ -39,7 +39,7 @@ class WeeklySlotBloc extends Bloc<WeeklySlotEvent, WeeklySlotState> {
     on<UpdateWeeklySlotsEvent>((event, emit) async {
       emit(WeeklySlotLoading());
       try {
-        await updateWeeklySlots(event.weeklySlot);
+        await updateWeeklySlot(event.weeklySlot);
         await _reloadWeeklySlots(emit, event.weeklySlot.scheduleId);
       } catch (e) {
         emit(WeeklySlotError(e.toString()));
@@ -49,7 +49,7 @@ class WeeklySlotBloc extends Bloc<WeeklySlotEvent, WeeklySlotState> {
     on<DeleteWeeklySlotsEvent>((event, emit) async {
       emit(WeeklySlotLoading());
       try {
-        await deleteWeeklySlots(event.weeklySlotId);
+        await deleteWeeklySlot(event.weeklySlotId);
         await _reloadWeeklySlots(emit, event.weeklySlotId);
       } catch (e) {
         emit(WeeklySlotError(e.toString()));
