@@ -1,32 +1,36 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/usecases/create_class_instance.dart';
 import '../../domain/usecases/delete_class_instance.dart';
-import '../../domain/usecases/get_class_instance.dart';
+import '../../domain/usecases/generate_week_class_instances.dart';
 import '../../domain/usecases/update_class_instance.dart';
 import 'class_instance_event.dart';
 import 'class_instance_state.dart';
 
 class ClassInstanceBloc extends Bloc<ClassInstanceEvent, ClassInstanceState> {
-  final GetClassInstances getClassInstances;
+  // final GetClassInstances getClassInstances;
+  final GenerateWeekClassInstances generateWeekClassInstances;
   final CreateClassInstance createClassInstance;
   final UpdateClassInstance updateClassInstance;
   final DeleteClassInstance deleteClassInstance;
 
   ClassInstanceBloc({
-    required this.getClassInstances,
+    // required this.getClassInstances,
+    required this.generateWeekClassInstances,
     required this.createClassInstance,
     required this.updateClassInstance,
     required this.deleteClassInstance,
   }) : super(ClassInstanceInitial()) {
     on<LoadClassInstancesEvent>((event, emit) async {
       emit(ClassInstanceLoading());
-      await _reloadClassInstances(
-        emit,
-        event.scheduleId,
-        event.startTime,
-        event.endTime,
-      );
-      try {} catch (e) {
+
+      try {
+        await _reloadClassInstances(
+          emit,
+          event.scheduleId,
+          event.startTime,
+          event.endTime,
+        );
+      } catch (e) {
         emit(ClassInstanceError(e.toString()));
       }
     });
@@ -94,10 +98,15 @@ class ClassInstanceBloc extends Bloc<ClassInstanceEvent, ClassInstanceState> {
     DateTime startTime,
     DateTime endTime,
   ) async {
-    final classInstanceList = await getClassInstances(
+    // final classInstanceList = await getClassInstances(
+    //   scheduleId: scheduleId,
+    //   startTime: startTime,
+    //   endTime: endTime,
+    // );
+    final classInstanceList = await generateWeekClassInstances(
       scheduleId: scheduleId,
-      startTime: startTime,
-      endTime: endTime,
+      weekStart: startTime,
+      weekEnd: endTime,
     );
     emit(
       ClassInstanceLoaded(

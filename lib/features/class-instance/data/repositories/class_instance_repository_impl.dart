@@ -31,13 +31,27 @@ class ClassInstanceRepositoryImpl implements ClassInstanceRepository {
       await datasource.deleteClassInstance(classInstanceId);
 
   @override
-  Future<List<ClassInstance>> generateWeekClassInstances(
+  Future<void> insertClassInstances(List<ClassInstance> instances) async {
+    final models = instances
+        .map((e) => ClassInstanceModel.fromEntity(e))
+        .toList();
+    final jsonList = models.map((e) => e.toJson()).toList();
+
+    if (jsonList.isNotEmpty) await datasource.insertClassInstances(jsonList);
+  }
+
+  @override
+  Future<List<ClassInstance>> getClassInstancesByWeek(
     String scheduleId,
     DateTime weekStart,
     DateTime weekEnd,
-  ) async => await datasource.generateWeekClassInstances(
-    scheduleId,
-    weekStart,
-    weekEnd,
-  );
+  ) async {
+    final result = await datasource.getClassInstancesByWeek(
+      scheduleId,
+      weekStart,
+      weekEnd,
+    );
+    final resultToReturn = result.map((e) => e.toEntity()).toList();
+    return resultToReturn;
+  }
 }

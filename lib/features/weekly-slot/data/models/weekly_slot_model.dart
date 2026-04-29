@@ -45,4 +45,15 @@ class WeeklySlotModel extends WeeklySlot {
     isActive: entity.isActive,
     createdAt: entity.createdAt,
   );
+
+  WeeklySlot toEntity() => WeeklySlot(
+    id: id,
+    scheduleId: scheduleId,
+    classTemplateId: classTemplateId,
+    dayOfWeek: dayOfWeek,
+    startTime: startTime,
+    endTime: endTime,
+    isActive: isActive,
+    createdAt: createdAt,
+  );
 }

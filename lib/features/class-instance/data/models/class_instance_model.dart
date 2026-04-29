@@ -62,4 +62,19 @@ class ClassInstanceModel extends ClassInstance {
         status: entity.status,
         createdAt: entity.createdAt,
       );
+
+  ClassInstance toEntity() => ClassInstance(
+    id: id,
+    scheduleId: scheduleId,
+    classTemplateId: classTemplateId,
+    weeklySlotId: weeklySlotId,
+    date: date,
+    startTime: startTime,
+    endTime: endTime,
+    minCapacity: minCapacity,
+    maxCapacity: maxCapacity,
+    currentBookings: currentBookings,
+    status: status,
+    createdAt: createdAt,
+  );
 }
