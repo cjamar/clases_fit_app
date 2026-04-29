@@ -9,4 +9,9 @@ abstract class ClassInstanceRepository {
   Future<void> createClassInstance(ClassInstance classInstance);
   Future<void> updateClassInstance(ClassInstance classInstance);
   Future<void> deleteClassInstance(String classInstanceId);
+  Future<List<ClassInstance>> generateWeekClassInstances(
+    String scheduleId,
+    DateTime weekStart,
+    DateTime weekEnd,
+  );
 }

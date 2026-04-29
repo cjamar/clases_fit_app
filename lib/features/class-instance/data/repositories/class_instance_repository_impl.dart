@@ -29,4 +29,15 @@ class ClassInstanceRepositoryImpl implements ClassInstanceRepository {
   @override
   Future<void> deleteClassInstance(String classInstanceId) async =>
       await datasource.deleteClassInstance(classInstanceId);
+
+  @override
+  Future<List<ClassInstance>> generateWeekClassInstances(
+    String scheduleId,
+    DateTime weekStart,
+    DateTime weekEnd,
+  ) async => await datasource.generateWeekClassInstances(
+    scheduleId,
+    weekStart,
+    weekEnd,
+  );
 }
