@@ -34,4 +34,15 @@ class WeeklySlotModel extends WeeklySlot {
     'is_active': isActive,
     'created_at': createdAt.toIso8601String(),
   };
+
+  factory WeeklySlotModel.fromEntity(WeeklySlot entity) => WeeklySlotModel(
+    id: entity.id,
+    scheduleId: entity.scheduleId,
+    classTemplateId: entity.classTemplateId,
+    dayOfWeek: entity.dayOfWeek,
+    startTime: entity.startTime,
+    endTime: entity.endTime,
+    isActive: entity.isActive,
+    createdAt: entity.createdAt,
+  );
 }

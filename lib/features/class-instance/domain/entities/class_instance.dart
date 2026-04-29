@@ -5,6 +5,7 @@ class ClassInstance extends Equatable {
   final String id;
   final String scheduleId;
   final String classTemplateId;
+  final String weeklySlotId;
   final DateTime date;
   final String startTime;
   final String endTime;
@@ -18,6 +19,7 @@ class ClassInstance extends Equatable {
     required this.id,
     required this.scheduleId,
     required this.classTemplateId,
+    required this.weeklySlotId,
     required this.date,
     required this.startTime,
     required this.endTime,
@@ -43,17 +45,3 @@ class ClassInstance extends Equatable {
     createdAt,
   ];
 }
-
-
-// TODO: ACTUALIZAR EN SUPABASE
-// id
-// schedule_id
-// class_template_id
-// date
-// start_time
-// end_time
-// min_capacity
-// max_capacity
-// current_bookings
-// status
-// created_at

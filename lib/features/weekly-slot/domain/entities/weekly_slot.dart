@@ -19,8 +19,10 @@ class WeeklySlot extends Equatable {
     required this.endTime,
     required this.isActive,
     required this.createdAt,
-  }) : assert(dayOfWeek >= 1 && dayOfWeek <= 7, 'Invalid weekday');
-  // TODO: el assert, por que hacerlo distinto que en la entity de ClassTemplate? (revisar)
+  }) : assert(
+         dayOfWeek >= 1 && dayOfWeek <= 7,
+         'Invalid weekday configuration',
+       );
 
   @override
   List<Object?> get props => [

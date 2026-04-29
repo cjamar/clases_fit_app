@@ -1,8 +1,7 @@
-import 'package:clases_fit_app/features/weekly-slot/data/models/weekly_slot_model.dart';
-
 import '../../domain/entities/weekly_slot.dart';
 import '../../domain/repositories/weeky_slot_repository.dart';
 import '../datasources/weekly_slot_datasource.dart';
+import '../models/weekly_slot_model.dart';
 
 class WeeklySlotRepositoryImpl extends WeeklySlotRepository {
   final WeeklySlotDatasource weeklySlotDatasource;
@@ -14,31 +13,13 @@ class WeeklySlotRepositoryImpl extends WeeklySlotRepository {
 
   @override
   Future<void> createWeeklySlot(WeeklySlot weeklySlot) async {
-    final weeklySlotModel = WeeklySlotModel(
-      id: weeklySlot.id,
-      scheduleId: weeklySlot.scheduleId,
-      classTemplateId: weeklySlot.classTemplateId,
-      dayOfWeek: weeklySlot.dayOfWeek,
-      startTime: weeklySlot.startTime,
-      endTime: weeklySlot.endTime,
-      isActive: weeklySlot.isActive,
-      createdAt: weeklySlot.createdAt,
-    );
+    final weeklySlotModel = WeeklySlotModel.fromEntity(weeklySlot);
     await weeklySlotDatasource.createWeeklySlot(weeklySlotModel);
   }
 
   @override
   Future<void> updateWeeklySlot(WeeklySlot weeklySlot) async {
-    final weeklySlotModel = WeeklySlotModel(
-      id: weeklySlot.id,
-      scheduleId: weeklySlot.scheduleId,
-      classTemplateId: weeklySlot.classTemplateId,
-      dayOfWeek: weeklySlot.dayOfWeek,
-      startTime: weeklySlot.startTime,
-      endTime: weeklySlot.endTime,
-      isActive: weeklySlot.isActive,
-      createdAt: weeklySlot.createdAt,
-    );
+    final weeklySlotModel = WeeklySlotModel.fromEntity(weeklySlot);
     await weeklySlotDatasource.updateWeeklySlot(weeklySlotModel);
   }
 

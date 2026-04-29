@@ -16,37 +16,13 @@ class ClassInstanceRepositoryImpl implements ClassInstanceRepository {
 
   @override
   Future<void> createClassInstance(ClassInstance classInstance) async {
-    final classInstanceModel = ClassInstanceModel(
-      id: classInstance.id,
-      scheduleId: classInstance.scheduleId,
-      classTemplateId: classInstance.classTemplateId,
-      date: classInstance.date,
-      startTime: classInstance.startTime,
-      endTime: classInstance.endTime,
-      minCapacity: classInstance.minCapacity,
-      maxCapacity: classInstance.maxCapacity,
-      currentBookings: classInstance.currentBookings,
-      status: classInstance.status,
-      createdAt: classInstance.createdAt,
-    );
+    final classInstanceModel = ClassInstanceModel.fromEntity(classInstance);
     await datasource.createClassInstance(classInstanceModel);
   }
 
   @override
   Future<void> updateClassInstance(ClassInstance classInstance) async {
-    final classInstanceModel = ClassInstanceModel(
-      id: classInstance.id,
-      scheduleId: classInstance.scheduleId,
-      classTemplateId: classInstance.classTemplateId,
-      date: classInstance.date,
-      startTime: classInstance.startTime,
-      endTime: classInstance.endTime,
-      minCapacity: classInstance.minCapacity,
-      maxCapacity: classInstance.maxCapacity,
-      currentBookings: classInstance.currentBookings,
-      status: classInstance.status,
-      createdAt: classInstance.createdAt,
-    );
+    final classInstanceModel = ClassInstanceModel.fromEntity(classInstance);
     await datasource.updateClassInstance(classInstanceModel);
   }
 

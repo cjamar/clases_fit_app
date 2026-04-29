@@ -21,4 +21,11 @@ class ScheduleModel extends Schedule {
     'name': name,
     'created_at': createdAt.toIso8601String(),
   };
+
+  factory ScheduleModel.fromEntity(Schedule entity) => ScheduleModel(
+    id: entity.id,
+    instructorId: entity.instructorId,
+    name: entity.name,
+    createdAt: entity.createdAt,
+  );
 }

@@ -1,4 +1,4 @@
-import 'package:clases_fit_app/features/class-template/domain/entities/class_template.dart';
+import '../../domain/entities/class_template.dart';
 
 class ClassTemplateModel extends ClassTemplate {
   ClassTemplateModel({
@@ -34,4 +34,15 @@ class ClassTemplateModel extends ClassTemplate {
     'max_capacity': maxCapacity,
     'created_at': createdAt.toIso8601String(),
   };
+
+  factory ClassTemplateModel.fromEntity(ClassTemplate entity) =>
+      ClassTemplateModel(
+        id: entity.id,
+        instructorId: entity.instructorId,
+        name: entity.name,
+        durationMinutes: entity.durationMinutes,
+        minCapacity: entity.minCapacity,
+        maxCapacity: entity.maxCapacity,
+        createdAt: entity.createdAt,
+      );
 }

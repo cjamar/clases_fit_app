@@ -14,32 +14,13 @@ class ClassTemplateRepositoryImpl extends ClassTemplateRepository {
 
   @override
   Future<void> createClassTemplate(ClassTemplate classTemplate) async {
-    final classTemplateModel = ClassTemplateModel(
-      id: classTemplate.id,
-      instructorId: classTemplate.instructorId,
-      name: classTemplate.name,
-      description: classTemplate.description,
-      durationMinutes: classTemplate.durationMinutes,
-      minCapacity: classTemplate.minCapacity,
-      maxCapacity: classTemplate.maxCapacity,
-      createdAt: classTemplate.createdAt,
-    );
-
+    final classTemplateModel = ClassTemplateModel.fromEntity(classTemplate);
     await datasource.createClassTemplate(classTemplateModel);
   }
 
   @override
   Future<void> updateClassTemplate(ClassTemplate classTemplate) async {
-    final classTemplateModel = ClassTemplateModel(
-      id: classTemplate.id,
-      instructorId: classTemplate.instructorId,
-      name: classTemplate.name,
-      description: classTemplate.description,
-      durationMinutes: classTemplate.durationMinutes,
-      minCapacity: classTemplate.minCapacity,
-      maxCapacity: classTemplate.maxCapacity,
-      createdAt: classTemplate.createdAt,
-    );
+    final classTemplateModel = ClassTemplateModel.fromEntity(classTemplate);
     await datasource.updateClassTemplate(classTemplateModel);
   }
 

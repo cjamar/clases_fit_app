@@ -14,24 +14,13 @@ class ScheduleRepositoryImpl extends ScheduleRepository {
 
   @override
   Future<void> createSchedule(Schedule schedule) async {
-    final scheduleModel = ScheduleModel(
-      id: schedule.id,
-      instructorId: schedule.instructorId,
-      name: schedule.name,
-      createdAt: schedule.createdAt,
-    );
-
+    final scheduleModel = ScheduleModel.fromEntity(schedule);
     await datasource.createSchedule(scheduleModel);
   }
 
   @override
   Future<void> updateSchedule(Schedule schedule) async {
-    final scheduleModel = ScheduleModel(
-      id: schedule.id,
-      instructorId: schedule.instructorId,
-      name: schedule.name,
-      createdAt: schedule.createdAt,
-    );
+    final scheduleModel = ScheduleModel.fromEntity(schedule);
     await datasource.updateSchedule(scheduleModel);
   }
 
