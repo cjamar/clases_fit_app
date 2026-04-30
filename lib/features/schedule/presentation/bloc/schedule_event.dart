@@ -8,9 +8,9 @@ abstract class ScheduleEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoadSchedules extends ScheduleEvent {
+class LoadSchedulesEvent extends ScheduleEvent {
   final String instructorId;
-  const LoadSchedules(this.instructorId);
+  const LoadSchedulesEvent(this.instructorId);
 
   @override
   List<Object?> get props => [instructorId];

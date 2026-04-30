@@ -5,7 +5,7 @@ class Schedule extends Equatable {
   final String instructorId;
   final String name;
   final DateTime createdAt;
-
+  // TODO: PODRIAMOS AÑADIR START DAYTIME Y END DAYTIME (para que el horario diario visual no tenga 24h sino de 8:00 a 21:00, definible al instructor)
   const Schedule({
     required this.id,
     required this.instructorId,

@@ -37,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _emailController.addListener(_validate);
     _passwordController.addListener(_validate);
     _confirmPasswordController.addListener(_validate);
-    _nameController.addListener(() => setState(() {}));
+    _nameFocus.addListener(() => setState(() {}));
     _emailFocus.addListener(() => setState(() {}));
     _passwordFocus.addListener(() => setState(() {}));
     _confirmPasswordFocus.addListener(() => setState(() {}));

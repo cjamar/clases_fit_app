@@ -71,18 +71,16 @@ class MyApp extends StatelessWidget {
   late final resetPassword = ResetPassword(authRepository);
   late final updatePassword = UpdatePassword(authRepository);
 
-  // CLASS TEMPLATE
-  late final classTemplateDatasource = ClassTemplateDatasourceImpl(supabase);
-  late final classTemplateRepository = ClassTemplateRepositoryImpl(
-    classTemplateDatasource,
-  );
+  // SCHEDULE
+  late final scheduleDatasource = ScheduleDatasourceImpl(supabase);
+  late final scheduleRepository = ScheduleRepositoryImpl(scheduleDatasource);
 
-  late final getClassTemplatesByInstructor = GetClassTemplatesByInstructor(
-    classTemplateRepository,
+  late final getSchedulesByInstructor = GetSchedulesByInstructor(
+    scheduleRepository,
   );
-  late final createClassTemplate = CreateClassTemplate(classTemplateRepository);
-  late final updateClassTemplate = UpdateClassTemplate(classTemplateRepository);
-  late final deleteClassTemplate = DeleteClassTemplate(classTemplateRepository);
+  late final createSchedule = CreateSchedule(scheduleRepository);
+  late final updateSchedule = UpdateSchedule(scheduleRepository);
+  late final deleteSchedule = DeleteSchedule(scheduleRepository);
 
   // WEEKLY SLOT
   late final weeklySlotDatasource = WeekySlotDatasourceImpl(supabase);
@@ -97,16 +95,18 @@ class MyApp extends StatelessWidget {
   late final updateWeeklySlot = UpdateWeeklySlot(weeklySlotRepository);
   late final deleteWeeklySlot = DeleteWeeklySlot(weeklySlotRepository);
 
-  // SCHEDULE
-  late final scheduleDatasource = ScheduleDatasourceImpl(supabase);
-  late final scheduleRepository = ScheduleRepositoryImpl(scheduleDatasource);
-
-  late final getSchedulesByInstructor = GetSchedulesByInstructor(
-    scheduleRepository,
+  // CLASS TEMPLATE
+  late final classTemplateDatasource = ClassTemplateDatasourceImpl(supabase);
+  late final classTemplateRepository = ClassTemplateRepositoryImpl(
+    classTemplateDatasource,
   );
-  late final createSchedule = CreateSchedule(scheduleRepository);
-  late final updateSchedule = UpdateSchedule(scheduleRepository);
-  late final deleteSchedule = DeleteSchedule(scheduleRepository);
+
+  late final getClassTemplatesByInstructor = GetClassTemplatesByInstructor(
+    classTemplateRepository,
+  );
+  late final createClassTemplate = CreateClassTemplate(classTemplateRepository);
+  late final updateClassTemplate = UpdateClassTemplate(classTemplateRepository);
+  late final deleteClassTemplate = DeleteClassTemplate(classTemplateRepository);
 
   // CLASS INSTANCE
   late final classInstanceDatasource = ClassInstanceDatasourceImpl(supabase);
@@ -139,12 +139,12 @@ class MyApp extends StatelessWidget {
             updatePassword: updatePassword,
           )..add(AppStarted()),
         ),
-        BlocProvider<ClassTemplateBloc>(
-          create: (_) => ClassTemplateBloc(
-            getClassTemplatesByInstructor: getClassTemplatesByInstructor,
-            createClassTemplate: createClassTemplate,
-            updateClassTemplate: updateClassTemplate,
-            deleteClassTemplate: deleteClassTemplate,
+        BlocProvider<ScheduleBloc>(
+          create: (_) => ScheduleBloc(
+            getSchedulesByInstructor: getSchedulesByInstructor,
+            createSchedule: createSchedule,
+            updateSchedule: updateSchedule,
+            deleteSchedule: deleteSchedule,
           ),
         ),
         BlocProvider<WeeklySlotBloc>(
@@ -155,12 +155,12 @@ class MyApp extends StatelessWidget {
             deleteWeeklySlot: deleteWeeklySlot,
           ),
         ),
-        BlocProvider<ScheduleBloc>(
-          create: (_) => ScheduleBloc(
-            getSchedulesByInstructor: getSchedulesByInstructor,
-            createSchedule: createSchedule,
-            updateSchedule: updateSchedule,
-            deleteSchedule: deleteSchedule,
+        BlocProvider<ClassTemplateBloc>(
+          create: (_) => ClassTemplateBloc(
+            getClassTemplatesByInstructor: getClassTemplatesByInstructor,
+            createClassTemplate: createClassTemplate,
+            updateClassTemplate: updateClassTemplate,
+            deleteClassTemplate: deleteClassTemplate,
           ),
         ),
         BlocProvider<ClassInstanceBloc>(

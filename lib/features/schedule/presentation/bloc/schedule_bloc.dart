@@ -18,7 +18,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
     required this.updateSchedule,
     required this.deleteSchedule,
   }) : super(ScheduleInitial()) {
-    on<LoadSchedules>((event, emit) async {
+    on<LoadSchedulesEvent>((event, emit) async {
       emit(ScheduleLoading());
       try {
         final schedules = await getSchedulesByInstructor(event.instructorId);
@@ -30,6 +30,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
 
     on<CreateScheduleEvent>((event, emit) async {
       emit(ScheduleLoading());
+      print('<<<<<<<< ON CREATE SCHEDULE EVENT BLOC >>>>>>>>');
       try {
         await createSchedule(event.schedule);
         await _reloadSchedules(emit, event.schedule.instructorId);

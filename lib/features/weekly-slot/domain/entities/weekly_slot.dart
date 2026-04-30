@@ -23,7 +23,7 @@ class WeeklySlot extends Equatable {
          dayOfWeek >= 1 && dayOfWeek <= 7,
          'Invalid weekday configuration',
        );
-
+  // TODO: PODRIA LA SEMANA ENTERA BLOQUEARSE CON EL ISACTIVE (ej: si el instructor no quiere que la gente se apunte la semana siguiente hasta que quede claro que las clases no cambian de hora)
   @override
   List<Object?> get props => [
     id,
