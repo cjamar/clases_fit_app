@@ -15,4 +15,8 @@ class StylesApp {
 
   // TextStyles
   static TextStyle titleTextStyle = TextStyle(fontSize: 18, color: blackColor);
+  static TextStyle secondaryTextStyle = TextStyle(
+    fontSize: 16,
+    color: blackColor,
+  );
 }

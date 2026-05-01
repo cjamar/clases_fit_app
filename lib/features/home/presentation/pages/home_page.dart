@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
   );
 
   _calendarBody(Size size) => SizedBox(
-    width: size.width,
+    width: size.width * 0.9,
     height: size.height * 0.7,
     child: BlocBuilder<ScheduleBloc, ScheduleState>(
       builder: (context, state) {
@@ -57,12 +57,13 @@ class _HomePageState extends State<HomePage> {
         }
         if (state is ScheduleLoaded) {
           if (state.scheduleList.isEmpty) {
-            _emptySchedulesContainer(size);
+            return _emptySchedulesContainer(size);
           }
           return _calendarView(size, state.scheduleList.first);
         }
         if (state is ScheduleError) {
-          _errorContainer(size, state.message);
+          print('ERROR SCHEDULE --> ${state.message}');
+          return _errorContainer(size, state.message);
         }
         return _loader();
       },
@@ -75,15 +76,17 @@ class _HomePageState extends State<HomePage> {
     child: Center(child: Text('Schedule --> ${schedule.name}')),
   );
 
-  _emptySchedulesContainer(Size size) => Container(
-    height: size.height * 0.3,
-    color: StylesApp.tertiaryColor,
-    child: Column(
-      children: [
-        Text('Vaya, parece que aún no tienes ningún calendario. !Crea uno!'),
-        _createScheduleButton(size),
-      ],
-    ),
+  _emptySchedulesContainer(Size size) => Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Text(
+        'Vaya, parece que aún no tienes ningún calendario, !CREA UNO!',
+        textAlign: TextAlign.center,
+        style: StylesApp.secondaryTextStyle,
+      ),
+      SizedBox(height: size.height * 0.025),
+      _createScheduleButton(size),
+    ],
   );
 
   _createScheduleButton(Size size) => SizedBox(
@@ -114,15 +117,22 @@ class _HomePageState extends State<HomePage> {
     MaterialPageRoute(builder: (context) => CreateSchedulePage()),
   );
 
-  _loader() => CircularProgressIndicator();
+  _loader() =>
+      Center(child: CircularProgressIndicator(color: StylesApp.primaryColor));
 
   _errorContainer(Size size, String message) => Container(
-    height: size.height * 0.3,
+    // decoration: BoxDecoration(
+    //   borderRadius: BorderRadius.circular(size.width * 0.03),
+    //   color: StylesApp.alertColor,
+    // ),
+    height: size.height * 0.1,
+    width: size.width * 0.8,
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.error),
-        SizedBox(height: size.height * 0.2),
-        Text('Ha ocurrido un error, $message'),
+        Icon(Icons.error, size: size.width * 0.15, color: StylesApp.alertColor),
+        SizedBox(height: size.height * 0.025),
+        Text('Ha ocurrido un error, $message', textAlign: TextAlign.center),
       ],
     ),
   );

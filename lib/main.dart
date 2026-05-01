@@ -1,3 +1,8 @@
+import 'package:clases_fit_app/features/user/data/datasources/user_datasource_impl.dart';
+import 'package:clases_fit_app/features/user/data/repositories/user_repository_impl.dart';
+import 'package:clases_fit_app/features/user/domain/usecases/create_user.dart';
+import 'package:clases_fit_app/features/user/domain/usecases/get_user_by_id.dart';
+import 'package:clases_fit_app/features/user/presentation/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -71,6 +76,13 @@ class MyApp extends StatelessWidget {
   late final resetPassword = ResetPassword(authRepository);
   late final updatePassword = UpdatePassword(authRepository);
 
+  // USER
+  late final userDatasource = UserDatasourceImpl(supabase);
+  late final userRepository = UserRepositoryImpl(userDatasource);
+
+  late final getUserById = GetUserById(userRepository);
+  late final createUser = CreateUser(userRepository);
+
   // SCHEDULE
   late final scheduleDatasource = ScheduleDatasourceImpl(supabase);
   late final scheduleRepository = ScheduleRepositoryImpl(scheduleDatasource);
@@ -138,6 +150,10 @@ class MyApp extends StatelessWidget {
             resetPassword: resetPassword,
             updatePassword: updatePassword,
           )..add(AppStarted()),
+        ),
+        BlocProvider<UserBloc>(
+          create: (_) =>
+              UserBloc(getUserById: getUserById, createUser: createUser),
         ),
         BlocProvider<ScheduleBloc>(
           create: (_) => ScheduleBloc(

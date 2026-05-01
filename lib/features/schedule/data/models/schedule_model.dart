@@ -16,7 +16,7 @@ class ScheduleModel extends Schedule {
   );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
+    if (id.isNotEmpty) 'id': id,
     'instructor_id': instructorId,
     'name': name,
     'created_at': createdAt.toIso8601String(),

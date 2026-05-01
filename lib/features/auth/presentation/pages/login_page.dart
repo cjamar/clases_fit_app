@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         rememberMe: _rememberMe,
       ),
     );
+
     _emailController.clear();
     _passwordController.clear();
   }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:clases_fit_app/features/auth/domain/usecases/update_password.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthChangeEvent, Supabase;
 import '../../../user/data/models/user_model.dart';
@@ -10,6 +9,7 @@ import '../../domain/usecases/sign_in.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/usecases/sign_out.dart';
 import '../../domain/usecases/sign_up.dart';
+import '../../domain/usecases/update_password.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 

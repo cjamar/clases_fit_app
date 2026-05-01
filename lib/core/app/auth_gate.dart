@@ -1,14 +1,15 @@
-import 'package:clases_fit_app/features/auth/presentation/bloc/auth_event.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/register_page.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/reset_password_page.dart';
-import 'package:clases_fit_app/features/auth/presentation/pages/set_new_password_page.dart';
-import 'package:clases_fit_app/features/home/presentation/pages/home_page.dart';
+import 'package:clases_fit_app/core/app/user_gate.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/bloc/auth_event.dart';
 import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/sent_reset_password_email.dart';
+import '../../features/auth/presentation/pages/set_new_password_page.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -17,7 +18,8 @@ class AuthGate extends StatelessWidget {
   Widget build(BuildContext context) => BlocBuilder<AuthBloc, AuthState>(
     builder: (context, state) {
       if (state is AuthenticatedState) {
-        return HomePage();
+        return const UserGate();
+        // return HomePage();
         // return _homePage(context); mantenemos este widget aux para seguir volviendo a zona login cuando lo necesitemos
       }
       if (state is LoginViewState) {

@@ -1,4 +1,3 @@
-import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_name_field.dart';
 import 'package:clases_fit_app/features/schedule/domain/entities/schedule.dart';
@@ -7,7 +6,6 @@ import 'package:clases_fit_app/features/schedule/presentation/bloc/schedule_even
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../../../auth/presentation/widgets/auth_submit_button.dart';
 
 class CreateSchedulePage extends StatefulWidget {
@@ -94,17 +92,8 @@ class _CreateSchedulePageState extends State<CreateSchedulePage> {
     ),
   );
 
-  // _headerArea(Size size) => Container(
-  //   height: size.height * 0.2,
-  //   color: Colors.greenAccent,
-  //   child: Center(
-  //     child: Text('Crea un horario', style: StylesApp.titleTextStyle),
-  //   ),
-  // );
-
-  _formArea(Size size) => Container(
+  _formArea(Size size) => SizedBox(
     height: size.height * 0.7,
-    color: Colors.lightBlueAccent,
     child: Form(
       key: _formKey,
       child: AuthForm(

@@ -1,8 +1,7 @@
-import 'package:clases_fit_app/features/schedule/data/datasources/schedule_datasource.dart';
-import 'package:clases_fit_app/features/schedule/data/models/schedule_model.dart';
-
 import '../../domain/entities/schedule.dart';
 import '../../domain/repositories/schedule_repository.dart';
+import '../datasources/schedule_datasource.dart';
+import '../models/schedule_model.dart';
 
 class ScheduleRepositoryImpl extends ScheduleRepository {
   final ScheduleDatasource datasource;
