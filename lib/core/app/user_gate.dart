@@ -6,7 +6,6 @@ import 'package:clases_fit_app/features/user/presentation/pages/complete_profile
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import '../../features/user/presentation/bloc/user_state.dart';
 
 class UserGate extends StatefulWidget {
