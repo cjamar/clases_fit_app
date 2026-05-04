@@ -2,6 +2,7 @@ import 'package:clases_fit_app/features/user/data/datasources/user_datasource_im
 import 'package:clases_fit_app/features/user/data/repositories/user_repository_impl.dart';
 import 'package:clases_fit_app/features/user/domain/usecases/create_user.dart';
 import 'package:clases_fit_app/features/user/domain/usecases/get_user_by_id.dart';
+import 'package:clases_fit_app/features/user/domain/usecases/upload_avatar.dart';
 import 'package:clases_fit_app/features/user/presentation/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
 
   late final getUserById = GetUserById(userRepository);
   late final createUser = CreateUser(userRepository);
+  late final uploadAvatar = UploadAvatar(userRepository);
 
   // SCHEDULE
   late final scheduleDatasource = ScheduleDatasourceImpl(supabase);
@@ -152,8 +154,11 @@ class MyApp extends StatelessWidget {
           )..add(AppStarted()),
         ),
         BlocProvider<UserBloc>(
-          create: (_) =>
-              UserBloc(getUserById: getUserById, createUser: createUser),
+          create: (_) => UserBloc(
+            getUserById: getUserById,
+            createUser: createUser,
+            uploadAvatar: uploadAvatar,
+          ),
         ),
         BlocProvider<ScheduleBloc>(
           create: (_) => ScheduleBloc(

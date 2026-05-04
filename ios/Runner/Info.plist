@@ -18,6 +18,16 @@
  	<array>
  		<string>com.clasesfit.app</string>
  	 </array>
+
+	 <!-- ====================================================
+     	Modificado para Supabase
+		Permiso para subir imagenes a storage
+	==================================================== -->
+   <key>NSPhotoLibraryUsageDescription</key>
+   <string>Necesitamos acceso a tu galería para subir imágenes</string>
+
+   <key>NSCameraUsageDescription</key>
+   <string>Necesitamos acceso a la cámara para tomar fotos</string>
  		 </dict>
  	 </array>
 	

@@ -2,8 +2,12 @@ import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_name_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_submit_button.dart';
+import 'package:clases_fit_app/features/user/presentation/bloc/user_bloc.dart';
+import 'package:clases_fit_app/features/user/presentation/bloc/user_event.dart';
+import 'package:clases_fit_app/features/user/presentation/bloc/user_state.dart';
 import 'package:clases_fit_app/features/user/presentation/widgets/image_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CompleteProfilePage extends StatefulWidget {
@@ -54,7 +58,28 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: _completeProfileBody(size),
+        body: BlocListener(
+          listener: (context, state) {
+            if (state is UserUploadingAvatarState) {
+              setState(() {
+                _isUploadingImage = true;
+              });
+            }
+            if (state is UserAvatarUploadedState) {
+              setState(() {
+                _avatarUrl = state.avatarUrl;
+                _isUploadingImage = false;
+              });
+            }
+            if (state is UserErrorState) {
+              setState(() {
+                _isUploadingImage = false;
+              });
+              _snackbar(state.message, StylesApp.alertColor);
+            }
+          },
+          child: _completeProfileBody(size),
+        ),
       ),
     );
   }
@@ -145,7 +170,11 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     onImageSelected: (source) => _pickImage(source),
   );
 
-  _pickImage(ImageSource source) {
-    print('PRINT image picker --> $source');
-  }
+  _pickImage(ImageSource source) =>
+      context.read<UserBloc>().add(UploadAvatarEvent(source));
+
+  _snackbar(String text, Color color) =>
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error, $text'), backgroundColor: color),
+      );
 }

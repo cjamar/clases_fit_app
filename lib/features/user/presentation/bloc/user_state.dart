@@ -31,3 +31,13 @@ class UserErrorState extends UserState {
   @override
   List<Object?> get props => [message];
 }
+
+class UserUploadingAvatarState extends UserState {}
+
+class UserAvatarUploadedState extends UserState {
+  final String avatarUrl;
+  const UserAvatarUploadedState(this.avatarUrl);
+
+  @override
+  List<Object?> get props => [avatarUrl];
+}

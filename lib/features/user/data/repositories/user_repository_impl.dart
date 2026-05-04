@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../datasources/user_datasource.dart';
@@ -16,4 +17,8 @@ class UserRepositoryImpl implements UserRepository {
     UserModel userModel = UserModel.fromEntity(user);
     await datasource.createUser(userModel);
   }
+
+  @override
+  Future<String?> uploadAvatar(ImageSource source) async =>
+      await datasource.uploadAvatar(source);
 }

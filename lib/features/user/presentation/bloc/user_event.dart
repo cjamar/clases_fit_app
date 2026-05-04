@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../domain/entities/user.dart';
 
 abstract class UserEvent extends Equatable {
@@ -22,4 +23,12 @@ class CreateUserEvent extends UserEvent {
 
   @override
   List<Object?> get props => [user];
+}
+
+class UploadAvatarEvent extends UserEvent {
+  final ImageSource source;
+  const UploadAvatarEvent(this.source);
+
+  @override
+  List<Object?> get props => [source];
 }
