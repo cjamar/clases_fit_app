@@ -32,7 +32,7 @@ class UserErrorState extends UserState {
   List<Object?> get props => [message];
 }
 
-class UserUploadingAvatarState extends UserState {}
+class UserAvatarUploadingState extends UserState {}
 
 class UserAvatarUploadedState extends UserState {
   final String avatarUrl;

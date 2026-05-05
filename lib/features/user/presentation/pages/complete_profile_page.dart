@@ -58,9 +58,9 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: BlocListener(
+        body: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
-            if (state is UserUploadingAvatarState) {
+            if (state is UserAvatarUploadingState) {
               setState(() {
                 _isUploadingImage = true;
               });
@@ -70,6 +70,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 _avatarUrl = state.avatarUrl;
                 _isUploadingImage = false;
               });
+              _validate();
             }
             if (state is UserErrorState) {
               setState(() {
@@ -110,10 +111,13 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
           _imageUserArea(size),
           SizedBox(height: size.height * 0.2),
         ],
-        submitButton: AuthSubmitButton(
-          text: 'Completar Perfil',
-          onPressed: _onSubmit,
-          size: size,
+        submitButton: ValueListenableBuilder<bool>(
+          valueListenable: _isValid,
+          builder: (_, isValid, _) => AuthSubmitButton(
+            text: 'Completar Perfil',
+            onPressed: isValid ? _onSubmit : null,
+            size: size,
+          ),
         ),
       ),
     ),
@@ -125,10 +129,6 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
         alignment: Alignment.center,
         children: [_circleAvatarImage(size), _iconAddPicture(size)],
       ),
-      if (_isUploadingImage) ...[
-        SizedBox(height: size.height * 0.05),
-        CircularProgressIndicator(),
-      ],
     ],
   );
 
@@ -142,6 +142,8 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
             size: size.width * 0.15,
             color: StylesApp.greyColor500,
           )
+        : _isUploadingImage
+        ? CircularProgressIndicator(color: StylesApp.whiteColor)
         : null,
   );
 
@@ -151,14 +153,14 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     child: Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.black.withAlpha(30),
+        color: Colors.black.withAlpha(50),
       ),
       child: IconButton(
         onPressed: () => _imagePickerButton(size),
         icon: Icon(
           Icons.add_a_photo,
           size: size.width * 0.1,
-          color: StylesApp.primaryColor,
+          color: StylesApp.whiteColor,
         ),
       ),
     ),

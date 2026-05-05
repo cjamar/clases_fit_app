@@ -40,7 +40,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<UploadAvatarEvent>((event, emit) async {
-      emit(UserLoadingState());
+      emit(UserAvatarUploadingState());
       try {
         final url = await uploadAvatar(event.source);
 

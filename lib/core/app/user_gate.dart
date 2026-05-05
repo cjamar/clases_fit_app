@@ -29,7 +29,9 @@ class _UserGateState extends State<UserGate> {
       if (state is UserLoadingState || state is UserInitialState) {
         return _loader();
       }
-      if (state is UserNotFoundState) {
+      if (state is UserNotFoundState ||
+          state is UserAvatarUploadedState ||
+          state is UserAvatarUploadingState) {
         return const CompleteProfilePage();
       }
       if (state is UserExistState) {
@@ -38,7 +40,7 @@ class _UserGateState extends State<UserGate> {
       if (state is UserErrorState) {
         return _errorContainer(state.message);
       }
-      return _loader();
+      return _errorContainer('error por defecto');
     },
   );
 
@@ -47,6 +49,7 @@ class _UserGateState extends State<UserGate> {
   _errorContainer(String message) => Scaffold(
     body: Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.error, color: StylesApp.alertColor, size: 40),
           SizedBox(height: 10),
