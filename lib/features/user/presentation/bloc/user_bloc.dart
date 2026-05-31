@@ -33,7 +33,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserLoadingState());
       try {
         await createUser(event.user);
-        emit(UserCreatedState());
+        emit(UserExistState(event.user));
+        // emit(UserCreatedState());
       } catch (e) {
         emit(UserErrorState(e.toString()));
       }

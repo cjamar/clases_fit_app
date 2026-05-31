@@ -1,6 +1,7 @@
 import 'package:clases_fit_app/core/theme/styles_app.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_form.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_name_field.dart';
+import 'package:clases_fit_app/features/auth/presentation/widgets/auth_phone_field.dart';
 import 'package:clases_fit_app/features/auth/presentation/widgets/auth_submit_button.dart';
 import 'package:clases_fit_app/features/user/presentation/bloc/user_bloc.dart';
 import 'package:clases_fit_app/features/user/presentation/bloc/user_event.dart';
@@ -9,6 +10,9 @@ import 'package:clases_fit_app/features/user/presentation/widgets/image_selector
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User;
+import '../../domain/entities/user.dart';
+import '../../domain/entities/user_role.dart';
 
 class CompleteProfilePage extends StatefulWidget {
   const CompleteProfilePage({super.key});
@@ -20,7 +24,9 @@ class CompleteProfilePage extends StatefulWidget {
 class _CompleteProfilePageState extends State<CompleteProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _nameFocus = FocusNode();
+  final _phoneFocus = FocusNode();
   final ValueNotifier<bool> _isValid = ValueNotifier(false);
   String? _avatarUrl;
   bool _isUploadingImage = false;
@@ -29,25 +35,48 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
   void initState() {
     super.initState();
     _nameController.addListener(_validate);
+    _phoneController.addListener(_validate);
     _nameFocus.addListener(() => setState(() {}));
+    _phoneFocus.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _phoneController.dispose();
     _nameFocus.dispose();
+    _phoneFocus.dispose();
     super.dispose();
   }
 
   _validate() {
     final userName = _nameController.text.trim();
+    final phone = _phoneController.text.trim();
     final userNameValid = userName.isNotEmpty && userName.length >= 3;
-    _isValid.value = userNameValid && !_isUploadingImage;
+    final phoneValid = phone.isNotEmpty && phone.length >= 9;
+    _isValid.value = userNameValid && phoneValid && !_isUploadingImage;
   }
 
   _onSubmit() {
     if (!_formKey.currentState!.validate()) return;
     print('ON SUBMIT completeprofilepage');
+
+    final authUser = Supabase.instance.client.auth.currentUser;
+
+    if (authUser == null) {
+      _snackbar('Usuario no autenticado', StylesApp.alertColor);
+      return;
+    }
+
+    final user = User(
+      id: authUser.id,
+      name: _nameController.text.trim(),
+      phone: _phoneController.text.trim(),
+      avatarUrl: _avatarUrl,
+      role: UserRole.owner,
+    );
+
+    context.read<UserBloc>().add(CreateUserEvent(user));
   }
 
   @override
@@ -57,6 +86,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
       behavior: HitTestBehavior.translucent,
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        backgroundColor: StylesApp.whiteColor,
         resizeToAvoidBottomInset: false,
         body: BlocListener<UserBloc, UserState>(
           listener: (context, state) {
@@ -72,6 +102,12 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
               });
               _validate();
             }
+            if (state is UserExistState) {
+              _snackbar(
+                'Perfil completado correctamente',
+                StylesApp.primaryColor,
+              );
+            }
             if (state is UserErrorState) {
               setState(() {
                 _isUploadingImage = false;
@@ -85,8 +121,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     );
   }
 
-  _completeProfileBody(Size size) => Container(
-    color: Colors.yellow,
+  _completeProfileBody(Size size) => SizedBox(
     width: size.width,
     height: size.height,
     child: Column(
@@ -95,29 +130,31 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
     ),
   );
 
-  _formArea(Size size) => Container(
-    // height: size.height * 0.7,
-    color: Colors.greenAccent,
-    child: Form(
-      key: _formKey,
-      child: AuthForm(
-        fields: [
-          AuthNameField(
-            controller: _nameController,
-            focusNode: _nameFocus,
-            size: size,
-          ),
-          SizedBox(height: size.height * 0.05),
-          _imageUserArea(size),
-          SizedBox(height: size.height * 0.2),
-        ],
-        submitButton: ValueListenableBuilder<bool>(
-          valueListenable: _isValid,
-          builder: (_, isValid, _) => AuthSubmitButton(
-            text: 'Completar Perfil',
-            onPressed: isValid ? _onSubmit : null,
-            size: size,
-          ),
+  _formArea(Size size) => Form(
+    key: _formKey,
+    child: AuthForm(
+      fields: [
+        AuthNameField(
+          controller: _nameController,
+          focusNode: _nameFocus,
+          size: size,
+        ),
+        SizedBox(height: size.height * 0.05),
+        AuthPhoneField(
+          controller: _phoneController,
+          focusNode: _phoneFocus,
+          size: size,
+        ),
+        SizedBox(height: size.height * 0.05),
+        _imageUserArea(size),
+        SizedBox(height: size.height * 0.15),
+      ],
+      submitButton: ValueListenableBuilder<bool>(
+        valueListenable: _isValid,
+        builder: (_, isValid, _) => AuthSubmitButton(
+          text: 'Completar Perfil',
+          onPressed: isValid ? _onSubmit : null,
+          size: size,
         ),
       ),
     ),
@@ -133,7 +170,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
   );
 
   _circleAvatarImage(Size size) => CircleAvatar(
-    backgroundColor: StylesApp.whiteColor,
+    backgroundColor: StylesApp.greyColor100,
     radius: size.width * 0.3,
     backgroundImage: _avatarUrl != null ? NetworkImage(_avatarUrl!) : null,
     child: _avatarUrl == null
